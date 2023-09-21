@@ -1,0 +1,17 @@
+version: '3'
+services:
+  test-app:
+    build:
+      context: ..
+      dockerfile: build/Dockerfile
+    container_name: test-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - web
+    ports:
+      - 4003:4003
+networks:
+  web:
+    external: true
