@@ -1,8 +1,9 @@
-package service
+package controller
 
 import (
+	"serviceX/src/model"
+
 	"github.com/gin-gonic/gin"
-	"test.com/model"
 )
 
 // Test App Find Stuff
@@ -19,7 +20,7 @@ import (
 // @Failure 500
 // @Router /stuff/{id} [GET]
 // @Security Bearer
-func (s service) Find(c *gin.Context) {
+func (c controller) Find(ctx *gin.Context) {
 	var data model.Stuff
-	s.db.FindOne(c, &data)
+	c.db.FindOne(ctx, &data)
 }

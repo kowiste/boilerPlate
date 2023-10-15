@@ -3,8 +3,9 @@ package validator
 import (
 	"sync"
 
+	"serviceX/src/config"
+
 	"github.com/go-playground/validator/v10"
-	"test.com/config"
 )
 
 type validation struct {
@@ -26,7 +27,7 @@ func New() error {
 	return nil
 }
 
-func GetInstance() *validation {
+func Get() *validation {
 	return singleInstance
 }
 

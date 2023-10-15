@@ -4,12 +4,13 @@ import (
 	"strings"
 	"sync"
 
+	"serviceX/src/config"
+	"serviceX/src/model"
+
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	log "gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"test.com/config"
-	"test.com/model"
-	"gorm.io/driver/postgres"
 )
 
 type db struct {
@@ -75,4 +76,9 @@ func (s db) validSchema(body map[string]interface{}, desc model.ModelInterface) 
 	}
 
 	return true
+}
+
+func (s db) Close() {
+	db, _ := s.conn.DB()
+	db.Close()
 }

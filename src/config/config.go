@@ -12,6 +12,7 @@ type Config struct {
 	DBType       string `envconfig:"DB_TYPE" validate:"required"`
 	DBMock       bool   `envconfig:"DB_MOCK"`
 	DBConnection string `envconfig:"DB_CONNECTION" validate:"dbValidation,required_if=DBMock false "`
+	APITimeOut   int    `envconfig:"API_TOUT" validate:"required"`
 }
 
 var lock = &sync.Mutex{}

@@ -1,8 +1,9 @@
-package service
+package controller
 
 import (
+	"serviceX/src/model"
+
 	"github.com/gin-gonic/gin"
-	"test.com/model"
 )
 
 // Test App Create Stuff
@@ -19,7 +20,7 @@ import (
 // @Failure 500
 // @Router /stuff/update/{id} [PATCH]
 // @Security Bearer
-func (s service) Update(c *gin.Context) {
+func (c controller) Update(ctx *gin.Context) {
 	data := model.Stuff{}
-	s.updateCore(c, &data)
+	c.updateCore(ctx, &data)
 }

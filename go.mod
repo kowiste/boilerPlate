@@ -1,4 +1,4 @@
-module test.com
+module serviceX
 
 go 1.20
 

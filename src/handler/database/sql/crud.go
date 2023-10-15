@@ -4,10 +4,11 @@ import (
 	"net/http"
 	"strings"
 
+	"serviceX/src/model"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
-	"test.com/model"
 )
 
 func (s db) Create(c *gin.Context, data model.ModelInterface) {

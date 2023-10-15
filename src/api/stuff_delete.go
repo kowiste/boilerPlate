@@ -1,8 +1,9 @@
-package service
+package controller
 
 import (
+	"serviceX/src/model"
+
 	"github.com/gin-gonic/gin"
-	"test.com/model"
 )
 
 // Test App Create Stuff
@@ -19,7 +20,7 @@ import (
 // @Failure 500
 // @Router /stuff/create [POST]
 // @Security Bearer
-func (s service) Create(c *gin.Context) {
-	var data model.Stuff
-	s.createCore(c, &data)
+func (c controller) Delete(ctx *gin.Context) {
+	data := model.Stuff{}
+	c.deleteCore(ctx, &data)
 }
