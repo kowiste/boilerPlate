@@ -1,6 +1,9 @@
 package service
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"test.com/model"
+)
 
 // Test App Create Stuff
 // @Summary Back Office User
@@ -17,5 +20,6 @@ import "github.com/gin-gonic/gin"
 // @Router /stuff/create [POST]
 // @Security Bearer
 func (s service) Create(c *gin.Context) {
-
+	var data model.Stuff
+	s.createCore(c, &data)
 }

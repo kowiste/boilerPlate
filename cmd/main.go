@@ -8,6 +8,7 @@ import (
 	"test.com/config"
 	"test.com/model"
 	"test.com/service"
+	"test.com/handler/validator"
 )
 
 type Service interface {
@@ -33,6 +34,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	validator.New()
+	err = validator.GetInstance().Validate(config.Get())
+	if err != nil {
+		panic(err)
+	}
 	core = service.Init()
 
 	r := gin.Default()
@@ -51,5 +57,5 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/api"
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
-	r.Run(":" + config.GetInstance().Port)
+	r.Run(":" + config.Get().Port)
 }

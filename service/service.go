@@ -15,8 +15,8 @@ type service struct {
 type Database interface {
 	Create(*gin.Context, model.ModelInterface)
 	FindOne(*gin.Context, model.ModelInterface)
-	FindAll(*gin.Context, model.ModelInterface)
-	Update(*gin.Context, model.ModelInterface)
+	FindAll(*gin.Context, model.FindAllRequest, model.ModelInterface, any)
+	Update(*gin.Context, model.ModelInterface, map[string]any)
 	Delete(*gin.Context, model.ModelInterface)
 }
 
@@ -38,5 +38,5 @@ func Init() *service {
 }
 
 func (s service) Authorization(c *gin.Context) {
-
+	// Call or logic for authorization
 }

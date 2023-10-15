@@ -5,12 +5,13 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
-	"test.com/validator"
 )
 
 type Config struct {
-	Port             string `envconfig:"PORT" validate:"required"`
-	DBGORMConnection string `envconfig:"DB_GORM_CONNECTION" validate:"required"`
+	Port         string `envconfig:"PORT" validate:"required"`
+	DBType       string `envconfig:"DB_TYPE" validate:"required"`
+	DBMock       bool   `envconfig:"DB_MOCK"`
+	DBConnection string `envconfig:"DB_CONNECTION" validate:"dbValidation,required_if=DBMock false "`
 }
 
 var lock = &sync.Mutex{}
@@ -30,11 +31,12 @@ func CreateInstance(fileName ...string) error {
 		if err != nil {
 			return err
 		}
-		return validator.New(singleInstance)
+
+		return nil
 	}
 	return nil
 }
 
-func GetInstance() *Config {
+func Get() *Config {
 	return singleInstance
 }
