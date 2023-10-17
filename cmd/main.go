@@ -5,6 +5,7 @@ import (
 	"serviceX/src/config"
 	"serviceX/src/handler/database/sql"
 	"serviceX/src/handler/validator"
+	"serviceX/src/model"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +24,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db := sql.CreateInstance()
+	db := sql.CreatePostgres(&model.Stuff{})
+	//db := nosql.CreateMongo("service1")
 	defer func() {
 		db.Close()
 	}()
@@ -32,7 +34,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	controller := controller.New()
+	controller := controller.New(db)
 
 	gin.SetMode(gin.ReleaseMode)
 	controller.Run()

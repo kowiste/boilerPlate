@@ -37,10 +37,11 @@ type Database interface {
 	Delete(*gin.Context, model.ModelInterface)
 }
 
-func New() *controller {
+func New(db Database) *controller {
 	c := &controller{
 		//service: service,
 		engine: gin.New(),
+		db:     db,
 	}
 
 	api := c.engine.Group("api")
@@ -51,7 +52,7 @@ func New() *controller {
 			stuff.POST("create", c.Create)
 			stuff.GET("list", c.List)
 			stuff.GET("find/:id", c.Find)
-			stuff.PATCH("update/:id", c.Update)
+			stuff.PUT("update/:id", c.Update)
 			stuff.DELETE("delete/:id", c.Delete)
 		}
 	}
@@ -70,7 +71,6 @@ func (c controller) timeOut(ctx *gin.Context) {
 	// Set the context on the request so that it can be
 	// cancelled by the middleware if the timeout is reached.
 	ctx.Request = ctx.Request.WithContext(contx)
-	// Proceed to the next handler in the chain.
 	ctx.Next()
 }
 

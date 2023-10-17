@@ -22,5 +22,5 @@ import (
 // @Security Bearer
 func (c controller) List(ctx *gin.Context) {
 	list := []model.Stuff{}
-	c.findAllCore(ctx, &model.Stuff{}, list)
+	c.findAllCore(ctx, &model.Stuff{}, &list)
 }

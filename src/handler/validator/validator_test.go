@@ -13,9 +13,9 @@ func TestInit(t *testing.T) {
 	p := dert{
 		Field1: 0,
 	}
-	err := New(p)
+	err := New()
 	assert.Error(t, err)
 	p.Field1=4
-	err = New(p)
+	err = New()
 	assert.Nil(t, err)
 }

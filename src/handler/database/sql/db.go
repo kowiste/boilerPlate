@@ -20,10 +20,11 @@ type db struct {
 var lock = &sync.Mutex{}
 var singleInstance *db
 
-func CreateInstance(dst ...interface{}) *db {
+func CreatePostgres(dst ...interface{}) *db {
 	if singleInstance == nil {
 		lock.Lock()
 		defer lock.Unlock()
+		singleInstance = &db{}
 		var err error
 		if !config.Get().DBMock {
 			singleInstance.conn, err = gorm.Open(postgres.Open(config.Get().DBConnection), &gorm.Config{
@@ -33,7 +34,8 @@ func CreateInstance(dst ...interface{}) *db {
 			if err != nil {
 				panic(err)
 			}
-			err = singleInstance.conn.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_general_ci").AutoMigrate(dst...)
+			err = singleInstance.conn.
+				AutoMigrate(dst...) //Automigrate the struct that are pass
 			if err != nil {
 				panic(err)
 			}
@@ -50,6 +52,7 @@ type NamingStrategy struct {
 	schema.NamingStrategy
 }
 
+// ColumnName Modify the name of the columns
 func (ns NamingStrategy) ColumnName(table, column string) string {
 	if column == "" {
 		return ""
@@ -61,7 +64,10 @@ func (ns NamingStrategy) ColumnName(table, column string) string {
 		}
 		column = tmpName
 	}
-	return strings.ToLower(column[:1]) + column[1:]
+	if strings.ToLower(column) == "id" { //No matter how id is write, column will be id
+		return "id"
+	}
+	return strings.ToLower(column[:1]) + column[1:] //First character allways a lower case
 }
 
 func (s db) validSchema(body map[string]interface{}, desc model.ModelInterface) bool {
