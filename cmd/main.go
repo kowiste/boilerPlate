@@ -1,9 +1,12 @@
 package main
 
 import (
+	"os"
 	controller "serviceX/src/api"
 	"serviceX/src/config"
+	"serviceX/src/handler/broker/nats"
 	"serviceX/src/handler/database/sql"
+	"serviceX/src/handler/log"
 	"serviceX/src/handler/validator"
 	"serviceX/src/model"
 
@@ -24,6 +27,20 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	//Initializate log
+	log.CreateInstance(log.ErrorLevel, os.Stderr)
+
+	//Initializate broker
+	err = nats.CreateInstance(config.Get().Name)
+	if err != nil {
+		panic(err)
+	}
+	nats.Get().SetMessageEvent(func(msg []byte) error {
+		return nil
+	})
+	log.Get().SetOutputs(os.Stderr)
+
+	//Config database
 	db := sql.CreatePostgres(&model.Stuff{})
 	//db := nosql.CreateMongo("service1")
 	defer func() {
@@ -34,8 +51,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	controller := controller.New(db)
+	nats.Get().WriteMessage("command", nats.NewMessage("test", "helooo"))
 
+	controller := controller.New(db)
 	gin.SetMode(gin.ReleaseMode)
 	controller.Run()
 }

@@ -3,15 +3,21 @@ package sql
 import (
 	"net/http"
 
+	"serviceX/src/handler/log"
 	"serviceX/src/model"
 
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	ErrNotFound   string = "Not Found"
+	ErrValidation string = "Validation error"
+)
+
 func (s db) Create(c *gin.Context, data model.ModelInterface) {
 	err := s.conn.Create(data).Error
 	if err != nil {
-		//controller.Log().Error(err)
+		log.Get().Print(log.ErrorLevel, err.Error())
 		c.Status(http.StatusInternalServerError)
 		return
 	}
@@ -22,6 +28,7 @@ func (s db) Create(c *gin.Context, data model.ModelInterface) {
 func (s db) FindOne(c *gin.Context, data model.ModelInterface) {
 	res := s.conn.Where("id = ?", c.Param("id")).First(data)
 	if res.RowsAffected == 0 {
+		log.Get().Print(log.ErrorLevel, ErrNotFound)
 		c.Status(http.StatusNotFound)
 		return
 	}
@@ -53,27 +60,33 @@ func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType mode
 }
 func (s db) Update(c *gin.Context, modelType model.ModelInterface, data map[string]any) {
 	if !s.validSchema(data, modelType) {
+		log.Get().Print(log.ErrorLevel, ErrValidation)
 		c.Status(http.StatusBadRequest)
 		return
 	}
 	res := s.conn.Model(modelType).Where("id = ?", modelType.GetID()).Updates(data)
 	if res.RowsAffected < 1 {
+		log.Get().Print(log.ErrorLevel, ErrNotFound)
 		c.Status(http.StatusNotFound)
 		return
 	} else if res.Error != nil {
+		log.Get().Print(log.ErrorLevel, res.Error.Error())
 		c.Status(http.StatusInternalServerError)
 		return
 	}
 	c.JSON(http.StatusOK, modelType)
 }
+
+// Delete
 func (s db) Delete(c *gin.Context, data model.ModelInterface) {
 	res := s.conn.Where("id = ?", c.Param("id")).Delete(data)
 	if res.RowsAffected < 1 {
+		log.Get().Print(log.ErrorLevel, ErrNotFound)
 		c.Status(http.StatusNotFound)
 		return
 	} else if res.Error != nil {
+		log.Get().Print(log.ErrorLevel, res.Error.Error())
 		c.Status(http.StatusInternalServerError)
-		//controller.Log().Error(err)
 		return
 	}
 	c.Status(http.StatusOK)

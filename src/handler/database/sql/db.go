@@ -5,11 +5,11 @@ import (
 	"sync"
 
 	"serviceX/src/config"
+	"serviceX/src/handler/log"
 	"serviceX/src/model"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	log "gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 )
 
@@ -28,10 +28,11 @@ func CreatePostgres(dst ...interface{}) *db {
 		var err error
 		if !config.Get().DBMock {
 			singleInstance.conn, err = gorm.Open(postgres.Open(config.Get().DBConnection), &gorm.Config{
-				Logger:         log.Default.LogMode(log.Info),
+				//Logger:         logdb.Default.LogMode(logdb.Info),
 				NamingStrategy: NamingStrategy{},
 			})
 			if err != nil {
+				log.Get().Print(log.ErrorLevel, err.Error())
 				panic(err)
 			}
 			err = singleInstance.conn.

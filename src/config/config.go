@@ -8,11 +8,21 @@ import (
 )
 
 type Config struct {
-	Port         string `envconfig:"PORT" validate:"required"`
+	Name       string `envconfig:"NAME" validate:"required"` //service name
+	Port       string `envconfig:"PORT" validate:"required"`
+	APITimeOut int    `envconfig:"API_TOUT" validate:"required"`
+	//Database
 	DBType       string `envconfig:"DB_TYPE" validate:"required"`
 	DBMock       bool   `envconfig:"DB_MOCK"`
 	DBConnection string `envconfig:"DB_CONNECTION" validate:"dbValidation,required_if=DBMock false "`
-	APITimeOut   int    `envconfig:"API_TOUT" validate:"required"`
+
+	//Broker
+	BrokerAddress string            `envconfig:"BROKER_ADDR"`
+	LogLevel      string            `envconfig:"LOG_LEVEL"`
+	ConsumerTopic map[string]string `envconfig:"CONSUMER_TOPICS"` //Key: topic, Value:GroupID
+	ResponseTopic string            `envconfig:"RESPONSE_TOPIC"`
+	LogTopic      string            `envconfig:"LOG_TOPIC"`
+	Topic         []string          `envconfig:"TOPIC"`
 }
 
 var lock = &sync.Mutex{}
