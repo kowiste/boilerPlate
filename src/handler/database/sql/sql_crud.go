@@ -48,12 +48,17 @@ func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType mode
 
 	query.Count(&count)
 
-	query.
+	res := query.
 		Offset(request.Offset).
 		Limit(request.Limit).
 		Find(data)
+	if res.Error != nil {
+		log.Get().Print(log.ErrorLevel, res.Error.Error())
+		c.Status(http.StatusInternalServerError)
+		return
+	}
 
-	c.JSON(200, model.FindAllResponse{
+	c.JSON(http.StatusOK, model.FindAllResponse{
 		Count: count,
 		Data:  data,
 	})

@@ -51,8 +51,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	log.Get().Print(log.InfoLevel, "hi")
-
 	controller := controller.New(db)
 	gin.SetMode(gin.ReleaseMode)
 	controller.Run()
