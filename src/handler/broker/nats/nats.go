@@ -16,8 +16,7 @@ type broker struct {
 	reconnCounter byte
 	producer      string
 	messageEvent  func(msg []byte) error
-	errorEvent    func(errorLog error)
-	wg            sync.WaitGroup
+	log           chan *log.LogEntry
 }
 
 var lock = &sync.Mutex{}
@@ -27,7 +26,7 @@ func CreateInstance(producerName string) (err error) {
 	if singleInstance == nil {
 		lock.Lock()
 		defer lock.Unlock()
-		singleInstance = &broker{producer: producerName}
+		singleInstance = &broker{producer: producerName, log: make(chan *log.LogEntry)}
 		err = singleInstance.connectCore()
 		if err != nil {
 			return
@@ -37,6 +36,7 @@ func CreateInstance(producerName string) (err error) {
 			log.Get().Print(log.InfoLevel, fmt.Sprintf("Consuming %s in the group %s", topic, group))
 			go singleInstance.Consume(topic)
 		}
+		go singleInstance.run()
 	}
 	return
 }
@@ -45,14 +45,16 @@ func Get() *broker {
 	return singleInstance
 }
 
-func (n *broker) connectCore() (err error) {
+// run waiting for log
+func (n *broker) run() {
+	for {
+		l := <-n.log
+		n.WriteLog(l)
+	}
+}
 
-	n.wg.Add(1)
-	n.conn, err = nats.Connect(config.Get().BrokerAddress, nats.ErrorHandler(func(_ *nats.Conn, _ *nats.Subscription, err error) {
-		n.errorEvent(err)
-	}), nats.ClosedHandler(func(_ *nats.Conn) {
-		n.wg.Done()
-	}))
+func (n *broker) connectCore() (err error) {
+	n.conn, err = nats.Connect(config.Get().BrokerAddress)
 	if err != nil {
 		return
 	}
@@ -66,8 +68,10 @@ func (n *broker) connectCore() (err error) {
 func (n *broker) SetMessageEvent(callback func(msg []byte) error) {
 	n.messageEvent = callback
 }
-func (n *broker) SetErrorEvent(callback func(errorLog error)) {
-	n.errorEvent = callback
+
+// GetChannel return log channel for nats
+func (n *broker) GetChannel() chan *log.LogEntry {
+	return n.log
 }
 
 func (n *broker) Reconnect(topic string) {

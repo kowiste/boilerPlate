@@ -1,15 +1,14 @@
 package log
 
 import (
-	"io"
 	"log"
-	"runtime"
+	"os"
 	"sync"
 )
 
 const (
-	ErrorLevel Level = iota
-	InfoLevel
+	InfoLevel Level = iota
+	ErrorLevel
 )
 
 var lock = &sync.Mutex{}
@@ -18,34 +17,38 @@ var singleInstance *logger
 type Level int
 type logger struct {
 	level Level
+	ch    []chan *LogEntry
 }
 
-func CreateInstance(level Level, outputs ...io.Writer) {
+// CreateInstance
+func CreateInstance(level Level) {
 	lock.Lock()
 	defer lock.Unlock()
 	if singleInstance == nil {
 		singleInstance = &logger{level: ErrorLevel}
 		log.SetFlags(0)
-		log.SetOutput(io.MultiWriter(outputs...))
+		log.SetOutput(os.Stderr) //Set default log to terminal
 	}
 }
 func Get() *logger {
 	return singleInstance
 }
 
+// SetLevel set level of
 func (l *logger) SetLevel(level Level) {
 	lock.Lock()
 	defer lock.Unlock()
 	l.level = level
 }
 
-// SetOutputs 
-func (l *logger) SetOutputs(output ...io.Writer) {
+// SetChannels set the channels where stream the logs
+func (l *logger) SetChannels(channels ...chan *LogEntry) {
 	lock.Lock()
 	defer lock.Unlock()
-	log.SetOutput(io.MultiWriter(output...))
+	l.ch = append(l.ch, channels...)
 }
 
+// Print  send the message to the terminal and all the set channels
 func (l *logger) Print(level Level, message string) {
 	lock.Lock()
 	defer lock.Unlock()
@@ -53,11 +56,10 @@ func (l *logger) Print(level Level, message string) {
 	if level < l.level {
 		return
 	}
-	outData := new(logEntry)
-	outData.Fill(message)
-	log.Println(outData)
-}
-func getCaller() (file string, line int) {
-	_, file, line, _ = runtime.Caller(3)
-	return
+	outData := NewLog(message)
+	log.Println(outData)      //print in terminal
+	for _, ch := range l.ch { //stream to others loggers
+		ch <- outData
+	}
+
 }

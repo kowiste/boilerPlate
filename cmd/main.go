@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	controller "serviceX/src/api"
 	"serviceX/src/config"
 	"serviceX/src/handler/broker/nats"
@@ -28,7 +27,7 @@ func main() {
 		panic(err)
 	}
 	//Initializate log
-	log.CreateInstance(log.ErrorLevel, os.Stderr)
+	log.CreateInstance(log.ErrorLevel)
 
 	//Initializate broker
 	err = nats.CreateInstance(config.Get().Name)
@@ -38,7 +37,8 @@ func main() {
 	nats.Get().SetMessageEvent(func(msg []byte) error {
 		return nil
 	})
-	log.Get().SetOutputs(os.Stderr)
+
+	log.Get().SetChannels(nats.Get().GetChannel())
 
 	//Config database
 	db := sql.CreatePostgres(&model.Stuff{})
@@ -51,7 +51,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	nats.Get().WriteMessage("command", nats.NewMessage("test", "helooo"))
+	log.Get().Print(log.InfoLevel, "hi")
 
 	controller := controller.New(db)
 	gin.SetMode(gin.ReleaseMode)

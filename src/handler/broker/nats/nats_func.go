@@ -2,6 +2,9 @@ package nats
 
 import (
 	"encoding/json"
+	"serviceX/src/config"
+	"serviceX/src/handler/log"
+	"serviceX/src/model"
 
 	"github.com/nats-io/nats.go"
 )
@@ -27,14 +30,19 @@ func (n *broker) consumeEvent(msg *nats.Msg) {
 	}()
 }
 
-func (n *broker) WriteMessage(topic string, msg *Message) (err error) {
+// WriteLog write the log in the log topic
+func (n *broker) WriteLog(data *log.LogEntry) {
+	n.js.Publish(config.Get().LogTopic, data.Marshal())
+}
+
+// WriteMessage write a message in a specific topic
+func (n *broker) WriteMessage(topic string, msg *model.Message) (err error) {
 	msg.Producer = n.producer
 	data, err := json.Marshal(msg)
 	if err != nil {
 		return
 	}
 	_, err = n.js.Publish(topic, data)
-
 	return
 }
 
@@ -43,7 +51,6 @@ func (n *broker) Close() (err error) {
 	if err != nil {
 		return
 	}
-	n.wg.Wait()
 	n.conn.Close()
 	return
 }
