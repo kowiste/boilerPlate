@@ -23,7 +23,7 @@ func CreateMongo(databaseName string, dst ...interface{}) *db {
 		defer lock.Unlock()
 		singleInstance = &db{}
 		if !config.Get().DBMock {
-			clientOptions := options.Client().ApplyURI(config.Get().DBConnection)
+			clientOptions := options.Client().ApplyURI(config.Get().DBNOSQL)
 			conn, err := mongo.Connect(context.Background(), clientOptions)
 			if err != nil {
 				panic(err)

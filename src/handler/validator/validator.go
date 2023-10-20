@@ -37,7 +37,7 @@ func (v validation) Validate(data any) error {
 
 func (v validation) databaseValidation(fl validator.FieldLevel) bool {
 	if config.Get().DBType == "GORM" && !config.Get().DBMock {
-		return config.Get().DBConnection != ""
+		return config.Get().DBSQL != ""
 	}
 	return true
 }

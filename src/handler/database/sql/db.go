@@ -27,7 +27,7 @@ func CreatePostgres(dst ...interface{}) *db {
 		singleInstance = &db{}
 		var err error
 		if !config.Get().DBMock {
-			singleInstance.conn, err = gorm.Open(postgres.Open(config.Get().DBConnection), &gorm.Config{
+			singleInstance.conn, err = gorm.Open(postgres.Open(config.Get().DBSQL), &gorm.Config{
 				//Logger:         logdb.Default.LogMode(logdb.Info),
 				NamingStrategy: NamingStrategy{},
 			})

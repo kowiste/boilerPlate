@@ -16,9 +16,8 @@ import (
 )
 
 type controller struct {
-	service Service
-	db      Database
-	engine  *gin.Engine
+	db     Database
+	engine *gin.Engine
 }
 
 type Service interface {
@@ -39,7 +38,6 @@ type Database interface {
 
 func New(db Database) *controller {
 	c := &controller{
-		//service: service,
 		engine: gin.New(),
 		db:     db,
 	}

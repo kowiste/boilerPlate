@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"reflect"
 
+	"serviceX/src/handler/log"
 	"serviceX/src/model"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,7 @@ func (s db) Create(c *gin.Context, data model.ModelInterface) {
 	println(string(b))
 	_, err := s.conn.Collection(name).InsertOne(context.Background(), b, nil)
 	if err != nil {
-		//controller.Log().Error(err)
+		log.Get().Print(log.ErrorLevel, err.Error())
 		c.Status(http.StatusInternalServerError)
 		return
 	}

@@ -4,6 +4,7 @@ import (
 	controller "serviceX/src/api"
 	"serviceX/src/config"
 	"serviceX/src/handler/broker/nats"
+	"serviceX/src/handler/database/nosql"
 	"serviceX/src/handler/database/sql"
 	"serviceX/src/handler/log"
 	"serviceX/src/handler/validator"
@@ -29,6 +30,13 @@ func main() {
 	//Initializate log
 	log.CreateInstance(log.ErrorLevel)
 
+	//Initializate validation
+	validator.New()
+	err = validator.Get().Validate(config.Get())
+	if err != nil {
+		panic(err)
+	}
+
 	//Initializate broker
 	err = nats.CreateInstance(config.Get().Name)
 	if err != nil {
@@ -37,21 +45,27 @@ func main() {
 	nats.Get().SetMessageEvent(func(msg []byte) error {
 		return nil
 	})
-
+	log.Get().SetLocal(true)
 	log.Get().SetChannels(nats.Get().GetChannel())
 
-	//Config database
+	//Config database SQL
 	db := sql.CreatePostgres(&model.Stuff{})
-	//db := nosql.CreateMongo("service1")
 	defer func() {
 		db.Close()
 	}()
-	validator.New()
-	err = validator.Get().Validate(config.Get())
-	if err != nil {
-		panic(err)
-	}
-	controller := controller.New(db)
+
+	//SQL controler
+	controllerSQL := controller.New(db)
 	gin.SetMode(gin.ReleaseMode)
-	controller.Run()
+	go controllerSQL.Run()
+
+	dbMongo := nosql.CreateMongo(config.Get().Name)
+	defer func() {
+		dbMongo.Close()
+	}()
+
+	//SQL controler
+	controllerMongo := controller.New(dbMongo)
+	gin.SetMode(gin.ReleaseMode)
+	controllerMongo.Run()
 }

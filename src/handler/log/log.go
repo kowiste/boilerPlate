@@ -17,6 +17,7 @@ var singleInstance *logger
 type Level int
 type logger struct {
 	level Level
+	local bool
 	ch    []chan *LogEntry
 }
 
@@ -41,6 +42,13 @@ func (l *logger) SetLevel(level Level) {
 	l.level = level
 }
 
+// SetLevel set level of
+func (l *logger) SetLocal(local bool) {
+	lock.Lock()
+	defer lock.Unlock()
+	l.local = local
+}
+
 // SetChannels set the channels where stream the logs
 func (l *logger) SetChannels(channels ...chan *LogEntry) {
 	lock.Lock()
@@ -57,7 +65,10 @@ func (l *logger) Print(level Level, message string) {
 		return
 	}
 	outData := NewLog(message)
-	log.Println(outData)      //print in terminal
+	log.Println(outData) //print in terminal
+	if l.local {         //only print in terminal
+		return
+	}
 	for _, ch := range l.ch { //stream to others loggers
 		ch <- outData
 	}

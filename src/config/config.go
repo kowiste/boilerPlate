@@ -12,9 +12,10 @@ type Config struct {
 	Port       string `envconfig:"PORT" validate:"required"`
 	APITimeOut int    `envconfig:"API_TOUT" validate:"required"`
 	//Database
-	DBType       string `envconfig:"DB_TYPE" validate:"required"`
-	DBMock       bool   `envconfig:"DB_MOCK"`
-	DBConnection string `envconfig:"DB_CONNECTION" validate:"dbValidation,required_if=DBMock false "`
+	DBType  string `envconfig:"DB_TYPE" validate:"required"`
+	DBMock  bool   `envconfig:"DB_MOCK"`
+	DBSQL   string `envconfig:"SQL_CONNECTION" validate:"dbValidation,required_if=DBMock false "`
+	DBNOSQL string `envconfig:"NOSQL_CONNECTION" validate:"dbValidation,required_if=DBMock false "`
 
 	//Broker
 	BrokerAddress string            `envconfig:"BROKER_ADDR"`
