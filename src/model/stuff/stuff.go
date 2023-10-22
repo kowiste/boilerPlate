@@ -1,11 +1,15 @@
-package model
+package stuff
 
 import (
+	controller "serviceX/src/api"
+	"serviceX/src/model"
+
 	"gorm.io/gorm"
 )
 
 type Stuff struct {
-	BaseModel
+	*controller.Controller
+	model.BaseModel
 	Field1 int    `json:"field1" example:"1"`
 	Name   string `json:"name" example:"peter"`
 }

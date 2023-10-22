@@ -4,11 +4,10 @@ import (
 	controller "serviceX/src/api"
 	"serviceX/src/config"
 	"serviceX/src/handler/broker/nats"
-	"serviceX/src/handler/database/nosql"
 	"serviceX/src/handler/database/sql"
 	"serviceX/src/handler/log"
 	"serviceX/src/handler/validator"
-	"serviceX/src/model"
+	"serviceX/src/model/stuff"
 
 	"github.com/gin-gonic/gin"
 )
@@ -49,7 +48,8 @@ func main() {
 	log.Get().SetChannels(nats.Get().GetChannel())
 
 	//Config database SQL
-	db := sql.CreatePostgres(&model.Stuff{})
+	stuff := new(stuff.Stuff)
+	db := sql.CreatePostgres(stuff)
 	defer func() {
 		db.Close()
 	}()
@@ -57,15 +57,19 @@ func main() {
 	//SQL controler
 	controllerSQL := controller.New(db)
 	gin.SetMode(gin.ReleaseMode)
-	go controllerSQL.Run()
+	stuff.Controller = controllerSQL
+	stuff.InjectAPI()
+	controllerSQL.Run()
 
-	dbMongo := nosql.CreateMongo(config.Get().Name)
-	defer func() {
-		dbMongo.Close()
-	}()
+	/*
+		 	dbMongo := nosql.CreateMongo(config.Get().Name)
+			defer func() {
+				dbMongo.Close()
+			}()
 
-	//SQL controler
-	controllerMongo := controller.New(dbMongo)
-	gin.SetMode(gin.ReleaseMode)
-	controllerMongo.Run()
+			//NOSQL controler
+			controllerMongo := controller.New(dbMongo)
+			gin.SetMode(gin.ReleaseMode)
+			controllerMongo.Run()
+	*/
 }

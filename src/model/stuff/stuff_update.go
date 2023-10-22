@@ -1,8 +1,6 @@
-package controller
+package stuff
 
 import (
-	"serviceX/src/model"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,9 +16,8 @@ import (
 // @Failure 409
 // @Failure 422 {object} map[string]string
 // @Failure 500
-// @Router /stuff/create [POST]
+// @Router /stuff/update/{id} [PATCH]
 // @Security Bearer
-func (c controller) Delete(ctx *gin.Context) {
-	data := model.Stuff{}
-	c.deleteCore(ctx, &data)
+func (s Stuff) Update(ctx *gin.Context) {
+	s.Controller.UpdateCore(ctx, &s)
 }

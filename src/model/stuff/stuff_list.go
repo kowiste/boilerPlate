@@ -1,8 +1,6 @@
-package controller
+package stuff
 
 import (
-	"serviceX/src/model"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +18,7 @@ import (
 // @Failure 500
 // @Router /stuff/create [POST]
 // @Security Bearer
-func (c controller) Create(ctx *gin.Context) {
-	var data model.Stuff
-	c.createCore(ctx, &data)
+func (s Stuff) List(ctx *gin.Context) {
+	list := []Stuff{}
+	s.Controller.FindAllCore(ctx, &s, &list)
 }

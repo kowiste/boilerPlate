@@ -15,18 +15,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-type controller struct {
+type Controller struct {
 	db     Database
 	engine *gin.Engine
-}
-
-type Service interface {
-	Authorization(c *gin.Context)
-	Create(c *gin.Context)
-	List(c *gin.Context)
-	Find(c *gin.Context)
-	Update(c *gin.Context)
-	Delete(c *gin.Context)
 }
 type Database interface {
 	Create(*gin.Context, model.ModelInterface)
@@ -36,43 +27,34 @@ type Database interface {
 	Delete(*gin.Context, model.ModelInterface)
 }
 
-func New(db Database) *controller {
-	c := &controller{
+func New(db Database) *Controller {
+	c := &Controller{
 		engine: gin.New(),
 		db:     db,
 	}
 
-	api := c.engine.Group("api")
-	{
-		api.Use(c.timeOut)
-		stuff := api.Group("stuff")
-		{
-			stuff.POST("create", c.Create)
-			stuff.GET("list", c.List)
-			stuff.GET("find/:id", c.Find)
-			stuff.PUT("update/:id", c.Update)
-			stuff.DELETE("delete/:id", c.Delete)
-		}
-	}
+	c.engine.Use(c.timeOut)
 	docs.SwaggerInfo.BasePath = "/api"
 	c.engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	return c
 }
 
-func (c *controller) Run() {
+func (c *Controller) Run() {
 	c.engine.Run("0.0.0.0:" + config.Get().Port)
 }
 
-func (c controller) timeOut(ctx *gin.Context) {
+func (c *Controller) GetEngine() *gin.Engine {
+	return c.engine
+}
+
+func (c Controller) timeOut(ctx *gin.Context) {
 	contx, cancel := context.WithTimeout(ctx.Request.Context(), time.Duration(config.Get().APITimeOut))
 	defer cancel()
-	// Set the context on the request so that it can be
-	// cancelled by the middleware if the timeout is reached.
 	ctx.Request = ctx.Request.WithContext(contx)
 	ctx.Next()
 }
 
-func (c controller) validate(err error) (bool, int, map[string]string) {
+func (c Controller) validate(err error) (bool, int, map[string]string) {
 	errorMessages := make(map[string]string)
 	if err != nil {
 		var validationErrors validator.ValidationErrors

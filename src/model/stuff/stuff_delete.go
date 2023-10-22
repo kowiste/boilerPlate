@@ -1,8 +1,6 @@
-package controller
+package stuff
 
 import (
-	"serviceX/src/model"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +18,6 @@ import (
 // @Failure 500
 // @Router /stuff/create [POST]
 // @Security Bearer
-func (c controller) List(ctx *gin.Context) {
-	list := []model.Stuff{}
-	c.findAllCore(ctx, &model.Stuff{}, &list)
+func (s Stuff) Delete(ctx *gin.Context) {
+	s.Controller.DeleteCore(ctx, &s)
 }

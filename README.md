@@ -24,3 +24,6 @@ To do the test of the project type
 ```sh
 go test ./... -cover
 ```
+
+
+Put the gin handler in the models and pass the controllers as pointer in the models?

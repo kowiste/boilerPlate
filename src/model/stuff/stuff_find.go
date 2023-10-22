@@ -1,14 +1,12 @@
-package controller
+package stuff
 
 import (
-	"serviceX/src/model"
-
 	"github.com/gin-gonic/gin"
 )
 
-// Test App Create Stuff
-// @Summary Back Office User
-// @Description Create a stuff for the test app
+// Test App Find Stuff
+// @Summary Test App Find Stuff
+// @Description Find one stuff for the test app
 // @Tags Test app stuff
 // @Accept json
 // @Produce json
@@ -18,9 +16,8 @@ import (
 // @Failure 409
 // @Failure 422 {object} map[string]string
 // @Failure 500
-// @Router /stuff/update/{id} [PATCH]
+// @Router /stuff/{id} [GET]
 // @Security Bearer
-func (c controller) Update(ctx *gin.Context) {
-	data := model.Stuff{}
-	c.updateCore(ctx, &data)
+func (s Stuff) Find(ctx *gin.Context) {
+	s.Controller.FindOne(ctx, &s)
 }

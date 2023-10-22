@@ -1,14 +1,12 @@
-package controller
+package stuff
 
 import (
-	"serviceX/src/model"
-
 	"github.com/gin-gonic/gin"
 )
 
-// Test App Find Stuff
-// @Summary Test App Find Stuff
-// @Description Find one stuff for the test app
+// Test App Create Stuff
+// @Summary Back Office User
+// @Description Create a stuff for the test app
 // @Tags Test app stuff
 // @Accept json
 // @Produce json
@@ -18,9 +16,8 @@ import (
 // @Failure 409
 // @Failure 422 {object} map[string]string
 // @Failure 500
-// @Router /stuff/{id} [GET]
+// @Router /stuff/create [POST]
 // @Security Bearer
-func (c controller) Find(ctx *gin.Context) {
-	var data model.Stuff
-	c.db.FindOne(ctx, &data)
+func (s Stuff) Create(ctx *gin.Context) {
+	s.Controller.CreateCore(ctx, &s)
 }
