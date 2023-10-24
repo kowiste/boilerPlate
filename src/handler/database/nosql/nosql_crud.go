@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (s db) Create(c *gin.Context, data model.ModelInterface) {
+func (s db) Create(c *gin.Context, data model.ModelI) {
 	name := reflect.TypeOf(data).Elem().Name() // using the struct name as a collection name
 	//flatting the  struct
 	b, _ := bson.Marshal(data)
@@ -27,17 +27,17 @@ func (s db) Create(c *gin.Context, data model.ModelInterface) {
 }
 
 // FindOne
-func (s db) FindOne(c *gin.Context, data model.ModelInterface) {
+func (s db) FindOne(c *gin.Context, data model.ModelI) {
 
 }
 
 // FindAll
-func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType model.ModelInterface, data any) {
+func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType model.ModelI, data any) {
 
 }
-func (s db) Update(c *gin.Context, modelType model.ModelInterface, data map[string]any) {
+func (s db) Update(c *gin.Context, modelType model.ModelI, data map[string]any) {
 
 }
-func (s db) Delete(c *gin.Context, data model.ModelInterface) {
+func (s db) Delete(c *gin.Context, data model.ModelI) {
 
 }

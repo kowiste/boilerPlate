@@ -1,89 +1,10 @@
 basePath: /api
-definitions:
-  model.Stuff:
-    properties:
-      field1:
-        example: 1
-        type: integer
-    type: object
 info:
   contact: {}
   description: API of test app.
   title: Test app API
   version: "1.0"
-paths:
-  /stuff/create:
-    post:
-      consumes:
-      - application/json
-      description: Create a stuff for the test app
-      parameters:
-      - description: Stuff data
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/model.Stuff'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-        "409":
-          description: Conflict
-        "422":
-          description: Unprocessable Entity
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Internal Server Error
-      security:
-      - Bearer: []
-      summary: Back Office User
-      tags:
-      - Test app stuff
-  /stuff/update:
-    patch:
-      consumes:
-      - application/json
-      description: Create a stuff for the test app
-      parameters:
-      - description: Stuff data
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/model.Stuff'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-        "409":
-          description: Conflict
-        "422":
-          description: Unprocessable Entity
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Internal Server Error
-      security:
-      - Bearer: []
-      summary: Back Office User
-      tags:
-      - Test app stuff
+paths: {}
 securityDefinitions:
   Bearer:
     description: Type "Bearer" followed by a space and JWT token.

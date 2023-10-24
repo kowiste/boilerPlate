@@ -4,12 +4,11 @@ import (
 	controller "serviceX/src/api"
 	"serviceX/src/config"
 	"serviceX/src/handler/broker/nats"
+	"serviceX/src/handler/database/nosql"
 	"serviceX/src/handler/database/sql"
 	"serviceX/src/handler/log"
 	"serviceX/src/handler/validator"
 	"serviceX/src/model/stuff"
-
-	"github.com/gin-gonic/gin"
 )
 
 // @title           Test app API
@@ -44,7 +43,7 @@ func main() {
 	nats.Get().SetMessageEvent(func(msg []byte) error {
 		return nil
 	})
-	log.Get().SetLocal(true)
+	log.Get().SetLocal(true) //only print in terminal remove after debug
 	log.Get().SetChannels(nats.Get().GetChannel())
 
 	//Config database SQL
@@ -54,22 +53,15 @@ func main() {
 		db.Close()
 	}()
 
-	//SQL controler
-	controllerSQL := controller.New(db)
-	gin.SetMode(gin.ReleaseMode)
-	stuff.Controller = controllerSQL
-	stuff.InjectAPI()
-	controllerSQL.Run()
+	//SQL controller
+	controller.New(db, stuff)
+	//Config database NoSQL
+	dbMongo := nosql.CreateMongo(config.Get().Name)
+	defer func() {
+		dbMongo.Close()
+	}()
 
-	/*
-		 	dbMongo := nosql.CreateMongo(config.Get().Name)
-			defer func() {
-				dbMongo.Close()
-			}()
+	//NoSQL controler
+	controller.New(dbMongo)
 
-			//NOSQL controler
-			controllerMongo := controller.New(dbMongo)
-			gin.SetMode(gin.ReleaseMode)
-			controllerMongo.Run()
-	*/
 }

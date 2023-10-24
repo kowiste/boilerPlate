@@ -1,25 +1,27 @@
 package stuff
 
 import (
-	controller "serviceX/src/api"
 	"serviceX/src/model"
 
 	"gorm.io/gorm"
 )
 
 type Stuff struct {
-	*controller.Controller
-	model.BaseModel
+	controller model.ControllerI `json:"-" example:"1"`
+	model.BaseSQL
 	Field1 int    `json:"field1" example:"1"`
 	Name   string `json:"name" example:"peter"`
 }
 
+func (m *Stuff) SetController(c model.ControllerI) {
+	m.controller = c
+}
 func (m *Stuff) BeforeValidation() {
-	m.BaseModel.BeforeValidation()
+	m.BaseSQL.BeforeValidation()
 }
 
 func (m *Stuff) AfterValidation() {
-	m.BaseModel.AfterValidation()
+	m.BaseSQL.AfterValidation()
 }
 
 func (m *Stuff) CreateValidation() (bool, map[string]string) {

@@ -19,5 +19,5 @@ import (
 // @Router /stuff/create [POST]
 // @Security Bearer
 func (s Stuff) Delete(ctx *gin.Context) {
-	s.Controller.DeleteCore(ctx, &s)
+	s.controller.DeleteCore(ctx, &s)
 }

@@ -16,35 +16,40 @@ import (
 )
 
 type Controller struct {
-	db     Database
-	engine *gin.Engine
-}
-type Database interface {
-	Create(*gin.Context, model.ModelInterface)
-	FindOne(*gin.Context, model.ModelInterface)
-	FindAll(*gin.Context, model.FindAllRequest, model.ModelInterface, any)
-	Update(*gin.Context, model.ModelInterface, map[string]any)
-	Delete(*gin.Context, model.ModelInterface)
+	db  DatabaseI
+	api *gin.Engine
 }
 
-func New(db Database) *Controller {
+type DatabaseI interface {
+	Create(*gin.Context, model.ModelI)
+	FindOne(*gin.Context, model.ModelI)
+	FindAll(*gin.Context, model.FindAllRequest, model.ModelI, any)
+	Update(*gin.Context, model.ModelI, map[string]any)
+	Delete(*gin.Context, model.ModelI)
+}
+
+func New(db DatabaseI, models ...model.ModelI) {
 	c := &Controller{
-		engine: gin.New(),
-		db:     db,
+		api: gin.New(),
+		db:  db,
 	}
+	for _, model := range models {
+		model.SetController(c)
+		model.InjectAPI()
+	}
+	c.run()
+}
 
-	c.engine.Use(c.timeOut)
+func (c *Controller) run() {
+	//gin.SetMode(gin.ReleaseMode)
+	c.api.Use(c.timeOut)
 	docs.SwaggerInfo.BasePath = "/api"
-	c.engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-	return c
+	c.api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	c.api.Run("0.0.0.0:" + config.Get().Port)
 }
 
-func (c *Controller) Run() {
-	c.engine.Run("0.0.0.0:" + config.Get().Port)
-}
-
-func (c *Controller) GetEngine() *gin.Engine {
-	return c.engine
+func (c Controller) GetAPI() *gin.Engine {
+	return c.api
 }
 
 func (c Controller) timeOut(ctx *gin.Context) {

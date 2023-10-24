@@ -71,7 +71,7 @@ func (ns NamingStrategy) ColumnName(table, column string) string {
 	return strings.ToLower(column[:1]) + column[1:] //First character allways a lower case
 }
 
-func (s db) validSchema(body map[string]interface{}, desc model.ModelInterface) bool {
+func (s db) validSchema(body map[string]interface{}, desc model.ModelI) bool {
 	sch, err := schema.Parse(desc, &sync.Map{}, NamingStrategy{})
 	if err != nil {
 	}

@@ -20,5 +20,5 @@ import (
 // @Security Bearer
 func (s Stuff) List(ctx *gin.Context) {
 	list := []Stuff{}
-	s.Controller.FindAllCore(ctx, &s, &list)
+	s.controller.FindAllCore(ctx, &s, &list)
 }

@@ -14,7 +14,7 @@ const (
 	ErrValidation string = "Validation error"
 )
 
-func (s db) Create(c *gin.Context, data model.ModelInterface) {
+func (s db) Create(c *gin.Context, data model.ModelI) {
 	err := s.conn.Create(data).Error
 	if err != nil {
 		log.Get().Print(log.ErrorLevel, err.Error())
@@ -25,7 +25,7 @@ func (s db) Create(c *gin.Context, data model.ModelInterface) {
 }
 
 // FindOne
-func (s db) FindOne(c *gin.Context, data model.ModelInterface) {
+func (s db) FindOne(c *gin.Context, data model.ModelI) {
 	res := s.conn.Where("id = ?", c.Param("id")).First(data)
 	if res.RowsAffected == 0 {
 		log.Get().Print(log.ErrorLevel, ErrNotFound)
@@ -36,7 +36,7 @@ func (s db) FindOne(c *gin.Context, data model.ModelInterface) {
 }
 
 // FindAll
-func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType model.ModelInterface, data any) {
+func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType model.ModelI, data any) {
 	var count int64
 
 	query := s.conn.Model(modelType)
@@ -63,7 +63,7 @@ func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType mode
 		Data:  data,
 	})
 }
-func (s db) Update(c *gin.Context, modelType model.ModelInterface, data map[string]any) {
+func (s db) Update(c *gin.Context, modelType model.ModelI, data map[string]any) {
 	if !s.validSchema(data, modelType) {
 		log.Get().Print(log.ErrorLevel, ErrValidation)
 		c.Status(http.StatusBadRequest)
@@ -83,7 +83,7 @@ func (s db) Update(c *gin.Context, modelType model.ModelInterface, data map[stri
 }
 
 // Delete
-func (s db) Delete(c *gin.Context, data model.ModelInterface) {
+func (s db) Delete(c *gin.Context, data model.ModelI) {
 	res := s.conn.Where("id = ?", c.Param("id")).Delete(data)
 	if res.RowsAffected < 1 {
 		log.Get().Print(log.ErrorLevel, ErrNotFound)

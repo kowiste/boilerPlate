@@ -1,4 +1,4 @@
-package stuff
+package other
 
 import (
 	"github.com/gin-gonic/gin"

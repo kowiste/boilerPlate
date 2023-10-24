@@ -42,7 +42,7 @@ func (l *logger) SetLevel(level Level) {
 	l.level = level
 }
 
-// SetLevel set level of
+// SetLevel Only print in terminal
 func (l *logger) SetLocal(local bool) {
 	lock.Lock()
 	defer lock.Unlock()

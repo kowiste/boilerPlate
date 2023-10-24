@@ -19,5 +19,5 @@ import (
 // @Router /stuff/create [POST]
 // @Security Bearer
 func (s Stuff) Create(ctx *gin.Context) {
-	s.Controller.CreateCore(ctx, &s)
+	s.controller.CreateCore(ctx, &s)
 }

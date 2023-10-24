@@ -13,7 +13,7 @@ import (
 )
 
 // createCore
-func (c Controller) CreateCore(ctx *gin.Context, data model.ModelInterface) {
+func (c Controller) CreateCore(ctx *gin.Context, data model.ModelI) {
 	valid, code, errorMessages := c.validate(ctx.ShouldBindJSON(data))
 	if !valid {
 		ctx.JSON(code, errorMessages)
@@ -28,12 +28,12 @@ func (c Controller) CreateCore(ctx *gin.Context, data model.ModelInterface) {
 }
 
 // findAllCore
-func (c Controller) FindOne(ctx *gin.Context, modelType model.ModelInterface) {
+func (c Controller) FindOne(ctx *gin.Context, modelType model.ModelI) {
 	c.db.FindOne(ctx, modelType)
 }
 
 // findAllCore
-func (c Controller) FindAllCore(ctx *gin.Context, modelType model.ModelInterface, data any) {
+func (c Controller) FindAllCore(ctx *gin.Context, modelType model.ModelI, data any) {
 	request := model.FindAllRequest{ //Get limit and offset of the request
 		Limit: 10,
 	}
@@ -46,7 +46,7 @@ func (c Controller) FindAllCore(ctx *gin.Context, modelType model.ModelInterface
 }
 
 // updateCore
-func (c Controller) UpdateCore(ctx *gin.Context, modelType model.ModelInterface) {
+func (c Controller) UpdateCore(ctx *gin.Context, modelType model.ModelI) {
 	// Schema validation
 	data, err := io.ReadAll(ctx.Request.Body)
 	if err != nil {
@@ -78,6 +78,6 @@ func (c Controller) UpdateCore(ctx *gin.Context, modelType model.ModelInterface)
 }
 
 // deleteCore
-func (c Controller) DeleteCore(ctx *gin.Context, modelType model.ModelInterface) {
+func (c Controller) DeleteCore(ctx *gin.Context, modelType model.ModelI) {
 	c.db.Delete(ctx, modelType)
 }

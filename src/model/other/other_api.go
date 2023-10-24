@@ -1,9 +1,9 @@
-package stuff
+package other
 
 func (s *Stuff) InjectAPI() {
 	api := s.controller.GetAPI().Group("api")
 	{
-		stuff := api.Group("stuff")
+		stuff := api.Group("other")
 		{
 			stuff.POST("create", s.Create)
 			stuff.GET("list", s.List)

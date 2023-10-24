@@ -19,5 +19,5 @@ import (
 // @Router /stuff/update/{id} [PATCH]
 // @Security Bearer
 func (s Stuff) Update(ctx *gin.Context) {
-	s.Controller.UpdateCore(ctx, &s)
+	s.controller.UpdateCore(ctx, &s)
 }

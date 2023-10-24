@@ -1,12 +1,12 @@
-package stuff
+package other
 
 import (
 	"github.com/gin-gonic/gin"
 )
 
-// Test App Find Stuff
-// @Summary Test App Find Stuff
-// @Description Find one stuff for the test app
+// Test App Create Stuff
+// @Summary Back Office User
+// @Description Create a stuff for the test app
 // @Tags Test app stuff
 // @Accept json
 // @Produce json
@@ -16,8 +16,9 @@ import (
 // @Failure 409
 // @Failure 422 {object} map[string]string
 // @Failure 500
-// @Router /stuff/{id} [GET]
+// @Router /stuff/create [POST]
 // @Security Bearer
-func (s Stuff) Find(ctx *gin.Context) {
-	s.controller.FindOne(ctx, &s)
+func (s Stuff) List(ctx *gin.Context) {
+	list := []Stuff{}
+	s.controller.FindAllCore(ctx, &s, &list)
 }
