@@ -1,6 +1,8 @@
 package model
 
 import (
+	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -23,9 +25,13 @@ func (m *BaseSQL) UpdateValidation() (bool, map[string]string) {
 func (m *BaseSQL) setID(id uint) {
 	m.ID = id
 }
-
+func (m *BaseSQL) SetID(id string) (err error) {
+	uID, err := strconv.Atoi(id)
+	m.ID = uint(uID)
+	return
+}
 func (m *BaseSQL) GetID() string {
-	return string(m.ID)
+	return fmt.Sprint(m.ID)
 }
 func (m *BaseSQL) getID() uint {
 	return m.ID

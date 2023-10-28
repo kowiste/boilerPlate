@@ -4,10 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"serviceX/src/handler/log"
 	"serviceX/src/model"
-
-	"github.com/gin-gonic/gin"
 )
 
 const (
@@ -15,34 +12,23 @@ const (
 	ErrValidation string = "validation error"
 )
 
-func (s db) Create(c *gin.Context, data model.ModelI) {
-	err := s.conn.Create(data).Error
-	if err != nil {
-		log.Get().Print(log.ErrorLevel, err.Error())
-		c.Status(http.StatusInternalServerError)
-		return
-	}
-	c.JSON(http.StatusCreated, data)
+func (s db) Create(data model.ModelI) error {
+	return s.conn.Create(data).Error
 }
 
 // FindOne
-func (s db) FindOne(c *gin.Context, data model.ModelI) {
-	res := s.conn.Where("id = ?", c.Param("id")).First(data)
+func (s db) FindOne(data model.ModelI) (status int, err error) {
+	res := s.conn.Where("id = ?", data.GetID()).First(data)
 	if res.RowsAffected == 0 {
-		log.Get().Print(log.ErrorLevel, ErrNotFound)
-		c.Status(http.StatusNotFound)
-		return
+		return http.StatusNotFound, errors.New(ErrNotFound)
 	}
-	c.JSON(http.StatusOK, data)
+	return http.StatusOK, nil
 }
 
 // FindAll
-func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType model.ModelI, data any) {
-	var count int64
-
+func (s db) FindAll(filters map[string]string, request model.FindAllRequest, modelType model.ModelI, data any) (status int, count int64, err error) {
 	query := s.conn.Model(modelType)
 
-	filters := c.QueryMap("filter")
 	if len(filters) > 0 {
 		query = query.Where(filters)
 	}
@@ -54,15 +40,10 @@ func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType mode
 		Limit(request.Limit).
 		Find(data)
 	if res.Error != nil {
-		log.Get().Print(log.ErrorLevel, res.Error.Error())
-		c.Status(http.StatusInternalServerError)
-		return
+		return http.StatusInternalServerError, 0, res.Error
 	}
 
-	c.JSON(http.StatusOK, model.FindAllResponse{
-		Count: count,
-		Data:  data,
-	})
+	return http.StatusOK, count, nil
 }
 func (s db) Update(modelType model.ModelI, data map[string]any) (status int, err error) {
 	if !s.validSchema(data, modelType) {
@@ -78,16 +59,12 @@ func (s db) Update(modelType model.ModelI, data map[string]any) (status int, err
 }
 
 // Delete
-func (s db) Delete(c *gin.Context, data model.ModelI) {
-	res := s.conn.Where("id = ?", c.Param("id")).Delete(data)
+func (s db) Delete(data model.ModelI) (status int, err error) {
+	res := s.conn.Where("id = ?", data.GetID()).Delete(data)
 	if res.RowsAffected < 1 {
-		log.Get().Print(log.ErrorLevel, ErrNotFound)
-		c.Status(http.StatusNotFound)
-		return
+		return http.StatusNotFound, errors.New(ErrNotFound)
 	} else if res.Error != nil {
-		log.Get().Print(log.ErrorLevel, res.Error.Error())
-		c.Status(http.StatusInternalServerError)
-		return
+		return http.StatusInternalServerError, res.Error
 	}
-	c.Status(http.StatusOK)
+	return http.StatusOK, nil
 }

@@ -21,11 +21,11 @@ type Controller struct {
 }
 
 type DatabaseI interface {
-	Create(*gin.Context, model.ModelI)
-	FindOne(*gin.Context, model.ModelI)
-	FindAll(*gin.Context, model.FindAllRequest, model.ModelI, any)
+	Create(data model.ModelI) (err error)
+	FindOne(model.ModelI) (status int, err error)
+	FindAll(map[string]string, model.FindAllRequest, model.ModelI, any) (status int, count int64, err error)
 	Update(model.ModelI, map[string]any) (status int, err error)
-	Delete(*gin.Context, model.ModelI)
+	Delete(data model.ModelI) (status int, err error)
 }
 
 func New(db DatabaseI, models ...model.ModelI) {
