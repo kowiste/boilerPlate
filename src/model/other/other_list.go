@@ -10,15 +10,15 @@ import (
 // @Tags Test app stuff
 // @Accept json
 // @Produce json
-// @Param user body model.Stuff true "Stuff data"
+// @Param user body other.Other true "Stuff data"
 // @Success 200 {object} string
 // @Failure 400
 // @Failure 409
 // @Failure 422 {object} map[string]string
 // @Failure 500
-// @Router /stuff/create [POST]
+// @Router /other/list [GET]
 // @Security Bearer
-func (s Stuff) List(ctx *gin.Context) {
-	list := []Stuff{}
+func (s Other) List(ctx *gin.Context) {
+	list := []Other{}
 	s.controller.FindAllCore(ctx, &s, &list)
 }

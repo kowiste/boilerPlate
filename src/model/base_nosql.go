@@ -7,10 +7,10 @@ import (
 )
 
 type BaseNoSQL struct {
-	ID        primitive.ObjectID `json:"id" gorm:"id"  binding:"omitempty" swaggerignore:"true"`
+	ID        primitive.ObjectID `json:"id" bson:"_id,omitempty" binding:"omitempty" swaggerignore:"true"`
 	CreatedAt time.Time          `json:"-"`
 	UpdatedAt time.Time          `json:"-"`
-	DeletedAt time.Time          `json:"-"`
+	DeletedAt time.Time          `json:"-" bson:"omitempty"`
 }
 
 func (m *BaseNoSQL) CreateValidation() (bool, map[string]string) {
@@ -27,7 +27,7 @@ func (m *BaseNoSQL) SetID(id string) (err error) {
 }
 
 func (m *BaseNoSQL) GetID() string {
-	return m.ID
+	return m.ID.String()
 }
 
 // BeforeValidation remove id from validation
@@ -37,5 +37,5 @@ func (m *BaseNoSQL) BeforeValidation() {
 
 // AfterValidation add id after validation
 func (m *BaseNoSQL) AfterValidation() {
-	
+
 }

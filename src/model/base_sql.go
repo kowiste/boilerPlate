@@ -20,21 +20,24 @@ func (m *BaseSQL) UpdateValidation() (bool, map[string]string) {
 	return true, map[string]string{}
 }
 
-func (m *BaseSQL) SetID(id uint) {
+func (m *BaseSQL) setID(id uint) {
 	m.ID = id
 }
 
-func (m *BaseSQL) GetID() uint {
+func (m *BaseSQL) GetID() string {
+	return string(m.ID)
+}
+func (m *BaseSQL) getID() uint {
 	return m.ID
 }
 
 // BeforeValidation remove id from validation
 func (m *BaseSQL) BeforeValidation() {
-	m.id = m.GetID()
-	m.SetID(0)
+	m.id = m.getID()
+	m.setID(0)
 }
 
 // AfterValidation add id after validation
 func (m *BaseSQL) AfterValidation() {
-	m.SetID(m.id)
+	m.setID(m.id)
 }

@@ -10,7 +10,7 @@ import (
 // @Tags Test app stuff
 // @Accept json
 // @Produce json
-// @Param user body model.Stuff true "Stuff data"
+// @Param user body stuff.Stuff true "Stuff data"
 // @Success 200 {object} string
 // @Failure 400
 // @Failure 409

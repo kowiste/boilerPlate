@@ -24,7 +24,7 @@ type DatabaseI interface {
 	Create(*gin.Context, model.ModelI)
 	FindOne(*gin.Context, model.ModelI)
 	FindAll(*gin.Context, model.FindAllRequest, model.ModelI, any)
-	Update(*gin.Context, model.ModelI, map[string]any)
+	Update(model.ModelI, map[string]any) (status int, err error)
 	Delete(*gin.Context, model.ModelI)
 }
 
@@ -33,6 +33,7 @@ func New(db DatabaseI, models ...model.ModelI) {
 		api: gin.New(),
 		db:  db,
 	}
+	//Loading api
 	for _, model := range models {
 		model.SetController(c)
 		model.InjectAPI()

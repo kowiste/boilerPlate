@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 
+	"serviceX/src/handler/log"
 	"serviceX/src/model"
 
 	"github.com/gin-gonic/gin"
@@ -74,7 +75,13 @@ func (c Controller) UpdateCore(ctx *gin.Context, modelType model.ModelI) {
 	}
 	modelType.AfterValidation()
 
-	c.db.Update(ctx, modelType, updateData)
+	status, err := c.db.Update(modelType, updateData)
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		ctx.Status(status)
+		return
+	}
+	ctx.JSON(status, modelType)
 }
 
 // deleteCore

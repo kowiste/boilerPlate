@@ -27,6 +27,9 @@ func (m *Stuff) AfterValidation() {
 func (m *Stuff) CreateValidation() (bool, map[string]string) {
 	return true, nil
 }
+func (m *Stuff) OnCreate() {}
+func (m *Stuff) OnUpdate() {}
+func (m *Stuff) OnDelete() {}
 
 // Hooks for Gorm
 func (m *Stuff) BeforeCreate(tx *gorm.DB) error {

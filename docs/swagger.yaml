@@ -1,10 +1,317 @@
 basePath: /api
+definitions:
+  other.Other:
+    properties:
+      field1:
+        example: 1
+        type: integer
+      name:
+        example: peter
+        type: string
+    type: object
+  stuff.Stuff:
+    properties:
+      field1:
+        example: 1
+        type: integer
+      name:
+        example: peter
+        type: string
+    type: object
 info:
   contact: {}
   description: API of test app.
   title: Test app API
   version: "1.0"
-paths: {}
+paths:
+  /other/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Find one stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/other.Other'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Test App Find Stuff
+      tags:
+      - Test app stuff
+  /other/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/other.Other'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Back Office User
+      tags:
+      - Test app stuff
+  /other/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Create a stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/other.Other'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Back Office User
+      tags:
+      - Test app stuff
+  /other/list:
+    get:
+      consumes:
+      - application/json
+      description: Create a stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/other.Other'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Back Office User
+      tags:
+      - Test app stuff
+  /other/update/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Create a stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/other.Other'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Back Office User
+      tags:
+      - Test app stuff
+  /stuff/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Find one stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/stuff.Stuff'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Test App Find Stuff
+      tags:
+      - Test app stuff
+  /stuff/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/stuff.Stuff'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Back Office User
+      tags:
+      - Test app stuff
+  /stuff/update/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Create a stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/stuff.Stuff'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Back Office User
+      tags:
+      - Test app stuff
 securityDefinitions:
   Bearer:
     description: Type "Bearer" followed by a space and JWT token.

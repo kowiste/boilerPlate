@@ -10,14 +10,14 @@ import (
 // @Tags Test app stuff
 // @Accept json
 // @Produce json
-// @Param user body model.Stuff true "Stuff data"
+// @Param user body other.Other true "Stuff data"
 // @Success 200 {object} string
 // @Failure 400
 // @Failure 409
 // @Failure 422 {object} map[string]string
 // @Failure 500
-// @Router /stuff/create [POST]
+// @Router /other/delete [DELETE]
 // @Security Bearer
-func (s Stuff) Delete(ctx *gin.Context) {
+func (s Other) Delete(ctx *gin.Context) {
 	s.controller.DeleteCore(ctx, &s)
 }

@@ -5,10 +5,9 @@ import (
 	"serviceX/src/config"
 	"serviceX/src/handler/broker/nats"
 	"serviceX/src/handler/database/nosql"
-	"serviceX/src/handler/database/sql"
 	"serviceX/src/handler/log"
 	"serviceX/src/handler/validator"
-	"serviceX/src/model/stuff"
+	"serviceX/src/model/other"
 )
 
 // @title           Test app API
@@ -46,22 +45,23 @@ func main() {
 	log.Get().SetLocal(true) //only print in terminal remove after debug
 	log.Get().SetChannels(nats.Get().GetChannel())
 
-	//Config database SQL
-	stuff := new(stuff.Stuff)
-	db := sql.CreatePostgres(stuff)
-	defer func() {
-		db.Close()
-	}()
+	/* 	//Config database SQL
+	   	stuff := new(stuff.Stuff)
+	   	db := sql.CreatePostgres(stuff)
+	   	defer func() {
+	   		db.Close()
+	   	}()
 
-	//SQL controller
-	controller.New(db, stuff)
+	   	//SQL controller
+	   	controller.New(db, stuff) */
+
 	//Config database NoSQL
-	dbMongo := nosql.CreateMongo(config.Get().Name)
+
+/* 	dbMongo := nosql.CreateMongo(config.Get().Name)
 	defer func() {
 		dbMongo.Close()
 	}()
-
 	//NoSQL controler
-	controller.New(dbMongo)
+	controller.New(dbMongo, &other.Other{}) */
 
 }

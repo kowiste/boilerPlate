@@ -1,6 +1,7 @@
 package sql
 
 import (
+	"errors"
 	"net/http"
 
 	"serviceX/src/handler/log"
@@ -10,8 +11,8 @@ import (
 )
 
 const (
-	ErrNotFound   string = "Not Found"
-	ErrValidation string = "Validation error"
+	ErrNotFound   string = "not Found"
+	ErrValidation string = "validation error"
 )
 
 func (s db) Create(c *gin.Context, data model.ModelI) {
@@ -63,23 +64,17 @@ func (s db) FindAll(c *gin.Context, request model.FindAllRequest, modelType mode
 		Data:  data,
 	})
 }
-func (s db) Update(c *gin.Context, modelType model.ModelI, data map[string]any) {
+func (s db) Update(modelType model.ModelI, data map[string]any) (status int, err error) {
 	if !s.validSchema(data, modelType) {
-		log.Get().Print(log.ErrorLevel, ErrValidation)
-		c.Status(http.StatusBadRequest)
-		return
+		return http.StatusBadRequest, errors.New(ErrValidation)
 	}
 	res := s.conn.Model(modelType).Where("id = ?", modelType.GetID()).Updates(data)
 	if res.RowsAffected < 1 {
-		log.Get().Print(log.ErrorLevel, ErrNotFound)
-		c.Status(http.StatusNotFound)
-		return
+		return http.StatusNotFound, errors.New(ErrNotFound)
 	} else if res.Error != nil {
-		log.Get().Print(log.ErrorLevel, res.Error.Error())
-		c.Status(http.StatusInternalServerError)
-		return
+		return http.StatusInternalServerError, res.Error
 	}
-	c.JSON(http.StatusOK, modelType)
+	return http.StatusBadRequest, nil
 }
 
 // Delete

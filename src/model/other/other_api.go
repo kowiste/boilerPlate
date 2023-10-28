@@ -1,6 +1,6 @@
 package other
 
-func (s *Stuff) InjectAPI() {
+func (s *Other) InjectAPI() {
 	api := s.controller.GetAPI().Group("api")
 	{
 		stuff := api.Group("other")

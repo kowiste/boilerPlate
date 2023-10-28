@@ -15,7 +15,7 @@ export PATH=$(go env GOPATH)/bin:$PATH
 
 Run this to generate the documentation:
 ```sh
-swag init -g main.go -o ./docs
+swag init -g ./cmd/main.go -o ./docs
 ```
 
 ## Test
