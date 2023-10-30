@@ -4,14 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Test App Create Stuff
-// @Summary Back Office User
-// @Description Create a stuff for the test app
-// @Tags Test app stuff
+// Test App Delete Other
+// @Summary Delete Other
+// @Description Delete other for the test app
+// @Tags Other
 // @Accept json
 // @Produce json
-// @Param user body other.Other true "Stuff data"
-// @Success 200 {object} string
+// @Param id path string true "Other ID"
+// @Success 200 
 // @Failure 400
 // @Failure 409
 // @Failure 422 {object} map[string]string

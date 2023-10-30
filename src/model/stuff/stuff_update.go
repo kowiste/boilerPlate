@@ -4,14 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Test App Create Stuff
-// @Summary Back Office User
-// @Description Create a stuff for the test app
-// @Tags Test app stuff
+// Test App Update Stuff
+// @Summary Update Stuff
+// @Description Update Stuff for the test app
+// @Tags Stuff
 // @Accept json
 // @Produce json
-// @Param user body stuff.Stuff true "Stuff data"
-// @Success 200 {object} string
+// @Param id path string true "Stuff ID"
+// @Param stuff body stuff.Stuff true "Stuff data"
+// @Success 200 {object} stuff.Stuff{id=string}
 // @Failure 400
 // @Failure 409
 // @Failure 422 {object} map[string]string

@@ -15,7 +15,7 @@ type broker struct {
 	js            nats.JetStreamContext
 	reconnCounter byte
 	producer      string
-	messageEvent  func(msg []byte) error
+	messageEvent  func(topic string, msg []byte) error
 	log           chan *log.LogEntry
 }
 
@@ -65,7 +65,7 @@ func (n *broker) connectCore() (err error) {
 	return nil
 }
 
-func (n *broker) SetMessageEvent(callback func(msg []byte) error) {
+func (n *broker) SetMessageEvent(callback func(topic string, msg []byte) error) {
 	n.messageEvent = callback
 }
 

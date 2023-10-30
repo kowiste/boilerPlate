@@ -21,7 +21,7 @@ func (n *broker) Consume(topic string) {
 func (n *broker) consumeEvent(msg *nats.Msg) {
 	go func() {
 		if n.messageEvent != nil {
-			if n.messageEvent(msg.Data) != nil {
+			if n.messageEvent(msg.Subject, msg.Data) != nil {
 				msg.Nak() //error send again the message
 			} else {
 				msg.Ack()

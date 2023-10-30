@@ -4,19 +4,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Test App Create Stuff
-// @Summary Back Office User
-// @Description Create a stuff for the test app
-// @Tags Test app stuff
+// Test App Delete Stuff
+// @Summary Delete Stuff
+// @Description Delete Stuff for the test app
+// @Tags Stuff
 // @Accept json
 // @Produce json
-// @Param user body stuff.Stuff true "Stuff data"
-// @Success 200 {object} string
+// @Param id path string true "Stuff ID"
+// @Success 200 
 // @Failure 400
 // @Failure 409
 // @Failure 422 {object} map[string]string
 // @Failure 500
-// @Router /stuff/create [POST]
+// @Router /stuff/delete [DELETE]
 // @Security Bearer
 func (s Stuff) Delete(ctx *gin.Context) {
 	s.controller.DeleteCore(ctx, &s)

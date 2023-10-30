@@ -27,7 +27,7 @@ func (m *BaseNoSQL) SetID(id string) (err error) {
 }
 
 func (m *BaseNoSQL) GetID() string {
-	return m.ID.String()
+	return m.ID.Hex()
 }
 
 // BeforeValidation remove id from validation

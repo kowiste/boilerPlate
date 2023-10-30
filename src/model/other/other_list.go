@@ -4,14 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Test App Create Stuff
-// @Summary Back Office User
-// @Description Create a stuff for the test app
-// @Tags Test app stuff
-// @Accept json
+// Test App Find All Other
+// @Summary Find All Other
+// @Description Return array of other for the test app
+// @Tags Other
 // @Produce json
-// @Param user body other.Other true "Stuff data"
-// @Success 200 {object} string
+// @Param filter[name] query string false "Filter by name"
+// @Success 200 {object} model.FindAllResponse{data=[]other.Other{id=string}}
 // @Failure 400
 // @Failure 409
 // @Failure 422 {object} map[string]string

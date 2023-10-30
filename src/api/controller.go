@@ -28,7 +28,7 @@ type DatabaseI interface {
 	Delete(data model.ModelI) (status int, err error)
 }
 
-func New(db DatabaseI, models ...model.ModelI) {
+func New(port string, db DatabaseI, models ...model.ModelI) {
 	c := &Controller{
 		api: gin.New(),
 		db:  db,
@@ -38,15 +38,15 @@ func New(db DatabaseI, models ...model.ModelI) {
 		model.SetController(c)
 		model.InjectAPI()
 	}
-	c.run()
+	c.run(port)
 }
 
-func (c *Controller) run() {
+func (c *Controller) run(port string) {
 	//gin.SetMode(gin.ReleaseMode)
 	c.api.Use(c.timeOut)
 	docs.SwaggerInfo.BasePath = "/api"
 	c.api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-	c.api.Run("0.0.0.0:" + config.Get().Port)
+	c.api.Run("0.0.0.0:" + port)
 }
 
 func (c Controller) GetAPI() *gin.Engine {

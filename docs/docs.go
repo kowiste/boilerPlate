@@ -22,7 +22,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Create a stuff for the test app",
+                "description": "Create a other for the test app",
                 "consumes": [
                     "application/json"
                 ],
@@ -30,13 +30,13 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Test app stuff"
+                    "Other"
                 ],
-                "summary": "Back Office User",
+                "summary": "Create other",
                 "parameters": [
                     {
-                        "description": "Stuff data",
-                        "name": "user",
+                        "description": "Other data",
+                        "name": "other",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -79,7 +79,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Create a stuff for the test app",
+                "description": "Delete other for the test app",
                 "consumes": [
                     "application/json"
                 ],
@@ -87,25 +87,84 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Test app stuff"
+                    "Other"
                 ],
-                "summary": "Back Office User",
+                "summary": "Delete Other",
                 "parameters": [
                     {
-                        "description": "Stuff data",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
+                        "type": "string",
+                        "description": "Other ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/other.Other"
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/other/find/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Find one other for the test app",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Other"
+                ],
+                "summary": "Test App Find One Other",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Other ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/other.Other"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
@@ -136,33 +195,54 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Create a stuff for the test app",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Return array of other for the test app",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Test app stuff"
+                    "Other"
                 ],
-                "summary": "Back Office User",
+                "summary": "Find All Other",
                 "parameters": [
                     {
-                        "description": "Stuff data",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/other.Other"
-                        }
+                        "type": "string",
+                        "description": "Filter by name",
+                        "name": "filter[name]",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.FindAllResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/definitions/other.Other"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
@@ -193,7 +273,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Create a stuff for the test app",
+                "description": "Update other for the test app",
                 "consumes": [
                     "application/json"
                 ],
@@ -201,13 +281,20 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Test app stuff"
+                    "Other"
                 ],
-                "summary": "Back Office User",
+                "summary": "Update Other",
                 "parameters": [
                     {
-                        "description": "Stuff data",
-                        "name": "user",
+                        "type": "string",
+                        "description": "Other ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Other data",
+                        "name": "other",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -219,64 +306,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "409": {
-                        "description": "Conflict"
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/other/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ],
-                "description": "Find one stuff for the test app",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Test app stuff"
-                ],
-                "summary": "Test App Find Stuff",
-                "parameters": [
-                    {
-                        "description": "Stuff data",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/other.Other"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/other.Other"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
@@ -315,13 +357,13 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Test app stuff"
+                    "Stuff"
                 ],
-                "summary": "Back Office User",
+                "summary": "Create Stuff",
                 "parameters": [
                     {
                         "description": "Stuff data",
-                        "name": "user",
+                        "name": "stuff",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -334,6 +376,200 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/stuff/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete Stuff for the test app",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stuff"
+                ],
+                "summary": "Delete Stuff",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stuff ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/stuff/find{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Find one Stuff for the test app",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stuff"
+                ],
+                "summary": "Test App Find One Stuff",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stuff ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/stuff.Stuff"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/stuff/list": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Return array of Stuff for the test app",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stuff"
+                ],
+                "summary": "Find All Stuff",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Filter by name",
+                        "name": "filter[name]",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.FindAllResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/definitions/stuff.Stuff"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
@@ -364,7 +600,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Create a stuff for the test app",
+                "description": "Update Stuff for the test app",
                 "consumes": [
                     "application/json"
                 ],
@@ -372,13 +608,20 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Test app stuff"
+                    "Stuff"
                 ],
-                "summary": "Back Office User",
+                "summary": "Update Stuff",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Stuff ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "Stuff data",
-                        "name": "user",
+                        "name": "stuff",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -390,64 +633,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "409": {
-                        "description": "Conflict"
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/stuff/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ],
-                "description": "Find one stuff for the test app",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Test app stuff"
-                ],
-                "summary": "Test App Find Stuff",
-                "parameters": [
-                    {
-                        "description": "Stuff data",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/stuff.Stuff"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/stuff.Stuff"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
@@ -473,6 +671,16 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.FindAllResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "data": {}
+            }
+        },
         "other.Other": {
             "type": "object",
             "properties": {

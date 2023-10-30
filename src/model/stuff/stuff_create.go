@@ -5,12 +5,12 @@ import (
 )
 
 // Test App Create Stuff
-// @Summary Back Office User
+// @Summary Create Stuff
 // @Description Create a stuff for the test app
-// @Tags Test app stuff
+// @Tags Stuff
 // @Accept json
 // @Produce json
-// @Param user body stuff.Stuff true "Stuff data"
+// @Param stuff body stuff.Stuff true "Stuff data"
 // @Success 200 {object} string
 // @Failure 400
 // @Failure 409
