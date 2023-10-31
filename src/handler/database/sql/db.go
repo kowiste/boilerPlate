@@ -27,6 +27,7 @@ func CreatePostgres(dst ...interface{}) *db {
 		singleInstance = &db{}
 		var err error
 		if !config.Get().DBMock {
+			// Establish the database connection
 			singleInstance.conn, err = gorm.Open(postgres.Open(config.Get().DBSQL), &gorm.Config{
 				//Logger:         logdb.Default.LogMode(logdb.Info),
 				NamingStrategy: NamingStrategy{},
@@ -35,8 +36,9 @@ func CreatePostgres(dst ...interface{}) *db {
 				log.Get().Print(log.ErrorLevel, err.Error())
 				panic(err)
 			}
-			err = singleInstance.conn.
-				AutoMigrate(dst...) //Automigrate the struct that are pass
+
+			// Automigrate the struct that are pass
+			err = singleInstance.conn.AutoMigrate(dst...)
 			if err != nil {
 				panic(err)
 			}
@@ -45,6 +47,7 @@ func CreatePostgres(dst ...interface{}) *db {
 	}
 	return singleInstance
 }
+
 func Get() *db {
 	return singleInstance
 }
