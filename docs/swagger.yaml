@@ -1,0 +1,428 @@
+basePath: /api
+definitions:
+  model.FindAllResponse:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data: {}
+    type: object
+  other.Other:
+    properties:
+      field1:
+        example: 1
+        maximum: 200
+        type: integer
+      name:
+        example: peter
+        type: string
+    type: object
+  stuff.Stuff:
+    type: object
+info:
+  contact: {}
+  description: API of test app.
+  title: Test app API
+  version: "1.0"
+paths:
+  /other/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a other for the test app
+      parameters:
+      - description: Other data
+        in: body
+        name: other
+        required: true
+        schema:
+          $ref: '#/definitions/other.Other'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Create other
+      tags:
+      - Other
+  /other/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete other for the test app
+      parameters:
+      - description: Other ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Delete Other
+      tags:
+      - Other
+  /other/find/{id}:
+    get:
+      description: Find one other for the test app
+      parameters:
+      - description: Other ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/other.Other'
+            - properties:
+                id:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Test App Find One Other
+      tags:
+      - Other
+  /other/list:
+    get:
+      description: Return array of other for the test app
+      parameters:
+      - description: Filter by name
+        in: query
+        name: filter[name]
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.FindAllResponse'
+            - properties:
+                data:
+                  items:
+                    allOf:
+                    - $ref: '#/definitions/other.Other'
+                    - properties:
+                        id:
+                          type: string
+                      type: object
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Find All Other
+      tags:
+      - Other
+  /other/update/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Update other for the test app
+      parameters:
+      - description: Other ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Other data
+        in: body
+        name: other
+        required: true
+        schema:
+          $ref: '#/definitions/other.Other'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/other.Other'
+            - properties:
+                id:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Update Other
+      tags:
+      - Other
+  /stuff/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a stuff for the test app
+      parameters:
+      - description: Stuff data
+        in: body
+        name: stuff
+        required: true
+        schema:
+          $ref: '#/definitions/stuff.Stuff'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Create Stuff
+      tags:
+      - Stuff
+  /stuff/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Stuff for the test app
+      parameters:
+      - description: Stuff ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Delete Stuff
+      tags:
+      - Stuff
+  /stuff/find{id}:
+    get:
+      description: Find one Stuff for the test app
+      parameters:
+      - description: Stuff ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/stuff.Stuff'
+            - properties:
+                id:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Test App Find One Stuff
+      tags:
+      - Stuff
+  /stuff/list:
+    get:
+      description: Return array of Stuff for the test app
+      parameters:
+      - description: Filter by name
+        in: query
+        name: filter[name]
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.FindAllResponse'
+            - properties:
+                data:
+                  items:
+                    allOf:
+                    - $ref: '#/definitions/stuff.Stuff'
+                    - properties:
+                        id:
+                          type: string
+                      type: object
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Find All Stuff
+      tags:
+      - Stuff
+  /stuff/update/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Update Stuff for the test app
+      parameters:
+      - description: Stuff ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Stuff data
+        in: body
+        name: stuff
+        required: true
+        schema:
+          $ref: '#/definitions/stuff.Stuff'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/stuff.Stuff'
+            - properties:
+                id:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict
+        "422":
+          description: Unprocessable Entity
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+      security:
+      - Bearer: []
+      summary: Update Stuff
+      tags:
+      - Stuff
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
