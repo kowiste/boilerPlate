@@ -49,6 +49,7 @@ func main() {
 	log.Get().SetLocal(true) //only print in terminal remove after debug
 	log.Get().SetChannels(nats.Get().GetChannel())
 
+	// If only use sql remove the follow code and call the controller without go
 	//Config database SQL
 	stuff := new(stuff.Stuff)
 	db := sql.CreatePostgres(stuff)
@@ -58,7 +59,6 @@ func main() {
 
 	//SQL controller
 	go controller.New("3003", db, stuff)
-
 	//Config database NoSQL
 
 	dbMongo := nosql.CreateMongo(config.Get().Name)

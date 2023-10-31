@@ -1,17 +1,5 @@
 version: '3'
 services:
-  #  test-app:
-  #    build:
-  #      context: ..
-  #      dockerfile: build/Dockerfile
-  #    container_name: test-app
-  #    restart: unless-stopped
-  #    env_file:
-  #      - .env
-  #    networks:
-  #      - web
-  #    ports:
-  #      - 4003:4003
   nats:
     container_name: nats-server
     image: nats:2.9.15-alpine3.17
