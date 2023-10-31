@@ -11,19 +11,13 @@ definitions:
     properties:
       field1:
         example: 1
+        maximum: 200
         type: integer
       name:
         example: peter
         type: string
     type: object
   stuff.Stuff:
-    properties:
-      field1:
-        example: 1
-        type: integer
-      name:
-        example: peter
-        type: string
     type: object
 info:
   contact: {}

@@ -8,7 +8,7 @@ import (
 type Other struct {
 	model.BaseNoSQL `bson:"inline"`
 	controller      model.ControllerI `json:"-"`
-	Field1          int               `json:"field1" example:"1"`
+	Field1          int               `json:"field1" example:"1" binding:"max=200"`
 	Name            string            `json:"name" example:"peter"`
 }
 

@@ -686,6 +686,7 @@ const docTemplate = `{
             "properties": {
                 "field1": {
                     "type": "integer",
+                    "maximum": 200,
                     "example": 1
                 },
                 "name": {
@@ -695,17 +696,7 @@ const docTemplate = `{
             }
         },
         "stuff.Stuff": {
-            "type": "object",
-            "properties": {
-                "field1": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "name": {
-                    "type": "string",
-                    "example": "peter"
-                }
-            }
+            "type": "object"
         }
     },
     "securityDefinitions": {

@@ -9,7 +9,7 @@ import (
 type Stuff struct {
 	controller model.ControllerI `json:"-" example:"1"`
 	model.BaseSQL
-	Field1 int    `json:"field1" example:"1"`
+	Field1 int    `json:"field1" example:"1 binding:"max=200"`
 	Name   string `json:"name" example:"peter"`
 }
 
