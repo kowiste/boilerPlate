@@ -1,0 +1,58 @@
+version: '3'
+services:
+  nats:
+    container_name: nats-server
+    image: nats:2.9.15-alpine3.17
+    restart: always
+    command: --js
+    volumes:
+      - ./nats-conf/nats.conf:/etc/nats/nats-server.conf
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    networks:
+      - web
+  mongo:
+    image: mongo:6.0.5
+    container_name: mongo-test
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      # seeding scripts
+      - ./mongo-initdb.d/init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    ports:
+      - 27018:27017
+    networks:
+      - web
+  postgres:
+    container_name: postgres-test
+    image: postgres:16.0-alpine3.18
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-template1}
+      PGDATA: /data/postgres
+
+    volumes:
+      # seeding scripts
+      - ./postgres-initdb.d/01.sql:/docker-entrypoint-initdb.d/01.sql
+      - postgres:/data/postgres
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - web
+    restart: unless-stopped
+volumes:
+  mongodb:
+  mongoconfig:
+  postgres:
+networks:
+  web:
+    external: true
