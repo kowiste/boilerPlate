@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	controller "serviceX/src/api"
 	"serviceX/src/config"
+	"serviceX/src/controller"
 	"serviceX/src/handler/broker/nats"
 	"serviceX/src/handler/database/nosql"
 	"serviceX/src/handler/database/sql"
