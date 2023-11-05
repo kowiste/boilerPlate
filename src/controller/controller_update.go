@@ -49,12 +49,34 @@ func (c Controller) UpdateCore(ctx *gin.Context, modelType model.ModelI) {
 	}
 	modelType.AfterValidation() //run logic after validate
 
+	status, err := modelType.OnUpdate()
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		ctx.Status(status)
+		return
+	}
 	//Database
-	status, err := c.db.Update(modelType, updateData)
+	status, err = c.db.Update(modelType, updateData)
 	if err != nil {
 		log.Get().Print(log.ErrorLevel, err.Error())
 		ctx.Status(status)
 		return
 	}
 	ctx.JSON(status, modelType)
+}
+
+// AsyncUpdateCore
+func (c Controller) AsyncUpdateCore(data map[string]any, modelType model.ModelI) (status int, err error) {
+	status, err = modelType.OnUpdate()
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		return
+	}
+	//Database
+	status, err = c.db.Update(modelType, data)
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		return
+	}
+	return
 }

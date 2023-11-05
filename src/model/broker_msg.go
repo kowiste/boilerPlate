@@ -16,6 +16,7 @@ type Message struct {
 	BaseID
 	Producer string `json:"producer"`
 	Event    string `json:"event"`
+	Model    string `json:"model"`
 	Data     []byte `json:"data"`
 }
 

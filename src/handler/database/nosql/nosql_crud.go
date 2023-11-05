@@ -3,7 +3,6 @@ package nosql
 import (
 	"context"
 	"net/http"
-	"reflect"
 
 	"serviceX/src/model"
 
@@ -14,18 +13,17 @@ import (
 )
 
 func (s db) Create(data model.ModelI) (err error) {
-	name := reflect.TypeOf(data).Elem().Name() // using the struct name as a collection name
+
 	data.OnCreate()
-	_, err = s.conn.Collection(name).InsertOne(context.Background(), data, nil)
+	_, err = s.conn.Collection(data.GetName()).InsertOne(context.Background(), data, nil)
 	return
 }
 
 // FindOne
 func (s db) FindOne(data model.ModelI) (status int, err error) {
-	name := reflect.TypeOf(data).Elem().Name() // using the struct name as a collection name
 	oID, _ := primitive.ObjectIDFromHex(data.GetID())
 	filter := bson.D{{Key: "_id", Value: oID}}
-	res := s.conn.Collection(name).FindOne(context.Background(), filter, nil)
+	res := s.conn.Collection(data.GetName()).FindOne(context.Background(), filter, nil)
 	if res.Err() == mongo.ErrNoDocuments {
 		return http.StatusBadRequest, model.ErrNoDocuments
 	} else if res.Err() != nil {
@@ -41,12 +39,11 @@ func (s db) FindOne(data model.ModelI) (status int, err error) {
 
 // FindAll
 func (s db) FindAll(filter map[string]string, request model.FindAllRequest, modelType model.ModelI, data any) (status int, count int64, err error) {
-	name := reflect.TypeOf(modelType).Elem().Name() // using the struct name as a collection name
 	//limit the request
 	opts := options.Find().SetSkip(int64(request.Offset))
 	opts.SetLimit(int64(request.Limit))
 
-	res, err := s.conn.Collection(name).Find(context.Background(), filter, opts)
+	res, err := s.conn.Collection(modelType.GetName()).Find(context.Background(), filter, opts)
 	if err != nil {
 		return http.StatusInternalServerError, 0, err
 	}
@@ -60,9 +57,8 @@ func (s db) FindAll(filter map[string]string, request model.FindAllRequest, mode
 
 // Update
 func (s db) Update(modelType model.ModelI, data map[string]any) (status int, err error) {
-	name := reflect.TypeOf(data).Elem().Name() // using the struct name as a collection name
 	modelType.OnUpdate()
-	result, err := s.conn.Collection(name).UpdateOne(context.Background(),
+	result, err := s.conn.Collection(modelType.GetName()).UpdateOne(context.Background(),
 		bson.M{"_id": modelType.GetID()},
 		bson.D{{Key: "$set", Value: data}})
 	if err != nil {
@@ -74,10 +70,9 @@ func (s db) Update(modelType model.ModelI, data map[string]any) (status int, err
 	return http.StatusOK, nil
 }
 func (s db) Delete(data model.ModelI) (status int, err error) {
-	name := reflect.TypeOf(data).Elem().Name() // using the struct name as a collection name
 	data.OnDelete()
 	filter := bson.M{"_id": data.GetID()}
-	result, err := s.conn.Collection(name).DeleteOne(context.Background(), filter)
+	result, err := s.conn.Collection(data.GetName()).DeleteOne(context.Background(), filter)
 	if err != nil {
 		return http.StatusInternalServerError, err
 	}

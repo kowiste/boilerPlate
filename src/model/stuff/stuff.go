@@ -1,7 +1,9 @@
 package stuff
 
 import (
+	"reflect"
 	"serviceX/src/model"
+	"strings"
 
 	"gorm.io/gorm"
 )
@@ -9,8 +11,15 @@ import (
 type Stuff struct {
 	controller model.ControllerI `json:"-" example:"1"`
 	model.BaseSQL
-	Field1 int    `json:"field1" example:"1 binding:"max=200"`
+	Field1 int    `json:"field1" example:"1" binding:"max=200"`
 	Name   string `json:"name" example:"peter"`
+}
+
+// GetName Return the struct/model name
+func (m *Stuff) GetName() string {
+	//We can remove reflect and juste set a constant
+	return strings.ToLower(reflect.TypeOf(m).Elem().Name()) // using the struct name as a collection name
+	//return "stuff"
 }
 
 func (m *Stuff) SetController(c model.ControllerI) {
@@ -27,9 +36,9 @@ func (m *Stuff) AfterValidation() {
 func (m *Stuff) CreateValidation() (bool, map[string]string) {
 	return true, nil
 }
-func (m *Stuff) OnCreate() {}
-func (m *Stuff) OnUpdate() {}
-func (m *Stuff) OnDelete() {}
+func (m *Stuff) OnCreate() (status int, err error) { return }
+func (m *Stuff) OnUpdate() (status int, err error) { return }
+func (m *Stuff) OnDelete() (status int, err error) { return }
 
 // Hooks for Gorm
 func (m *Stuff) BeforeCreate(tx *gorm.DB) error {

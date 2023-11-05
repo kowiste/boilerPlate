@@ -21,10 +21,32 @@ func (c Controller) CreateCore(ctx *gin.Context, data model.ModelI) {
 		ctx.JSON(http.StatusUnprocessableEntity, messages)
 		return
 	}
-	err := c.db.Create(data)
+	status, err := data.OnCreate()
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		ctx.Status(status)
+		return
+	}
+	err = c.db.Create(data)
 	if err != nil {
 		log.Get().Print(log.ErrorLevel, err.Error())
 		ctx.Status(http.StatusInternalServerError)
+		return
 	}
 	ctx.JSON(http.StatusCreated, data)
+}
+
+// AsyncCreateCore
+func (c Controller) AsyncCreateCore(data model.ModelI) (status int, err error) {
+	status, err = data.OnCreate()
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		return status, err
+	}
+	err = c.db.Create(data)
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		return http.StatusInternalServerError, err
+	}
+	return http.StatusCreated, nil
 }

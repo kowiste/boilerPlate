@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"serviceX/src/config"
 	"serviceX/src/controller"
 	"serviceX/src/handler/broker/nats"
@@ -42,10 +41,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	nats.Get().SetMessageEvent(func(topic string, msg []byte) error {
-		fmt.Println("topic: ", topic, string(msg))
-		return nil
-	})
+
 	log.Get().SetLocal(true) //only print in terminal remove after debug
 	log.Get().SetChannels(nats.Get().GetChannel())
 
@@ -58,14 +54,15 @@ func main() {
 	}()
 
 	//SQL controller
-	go controller.New("3003", db, stuff)
+	c := controller.New(db, stuff)
 	//Config database NoSQL
-
+	nats.Get().SetMessageEvent(c.AsyncMessage)
+	go c.Run("3003")
 	dbMongo := nosql.CreateMongo(config.Get().Name)
 	defer func() {
 		dbMongo.Close()
 	}()
 	//NoSQL controler
-	controller.New(config.Get().Port, dbMongo, &other.Other{})
-
+	c2 := controller.New(dbMongo, &other.Other{})
+	c2.Run(config.Get().Port)
 }

@@ -14,11 +14,34 @@ func (c Controller) DeleteCore(ctx *gin.Context, modelType model.ModelI) {
 	if err != nil {
 		log.Get().Print(log.ErrorLevel, err.Error())
 		ctx.Status(http.StatusBadRequest)
+		return
 	}
-	status, err := c.db.Delete(modelType)
+	status, err := modelType.OnDelete()
 	if err != nil {
 		log.Get().Print(log.ErrorLevel, err.Error())
 		ctx.Status(status)
+		return
+	}
+	status, err = c.db.Delete(modelType)
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		ctx.Status(status)
+		return
 	}
 	ctx.Status(status)
+}
+
+// AsyncDeleteCore
+func (c Controller) AsyncDeleteCore(data model.ModelI) (status int, err error) {
+	status, err = data.OnDelete()
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		return
+	}
+	status, err = c.db.Delete(data)
+	if err != nil {
+		log.Get().Print(log.ErrorLevel, err.Error())
+		return
+	}
+	return
 }

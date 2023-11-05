@@ -20,7 +20,7 @@ type Controller struct {
 	api *gin.Engine
 }
 
-func New(port string, db model.DatabaseI, models ...model.ModelI) {
+func New(db model.DatabaseI, models ...model.ModelI) *Controller {
 	c := &Controller{
 		api: gin.New(),
 		db:  db,
@@ -30,10 +30,10 @@ func New(port string, db model.DatabaseI, models ...model.ModelI) {
 		model.SetController(c)
 		model.InjectAPI()
 	}
-	c.run(port)
+	return c
 }
 
-func (c *Controller) run(port string) {
+func (c *Controller) Run(port string) {
 	//gin.SetMode(gin.ReleaseMode)
 	c.api.Use(c.timeOut)
 	docs.SwaggerInfo.BasePath = "/api"
