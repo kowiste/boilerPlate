@@ -1,0 +1,9 @@
+{
+    "DatabaseURL": "localhost",
+    "DatabasePort": "9306",
+    "DatabaseUser": "root",
+    "DatabasePassword": "example",
+    "DatabaseName": "user",
+    "ServiceName": "reporting",
+    "ServicePort": "8084"
+}
