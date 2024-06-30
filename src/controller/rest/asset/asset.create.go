@@ -1,18 +1,18 @@
 package assetapi
 
 import (
-	"boiler/src/model/asset"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func (a AssetAPI) createAsset(c *gin.Context) {
-	asset := new(asset.Asset)
+	asset := a.service.GetAsset()
 	asset.ID = c.Param("id")
-	id, err := a.service.Create(c.Request.Context(), asset)
+	id, err := a.service.Create(c.Request.Context())
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
+		return
 	}
 	c.JSON(http.StatusOK, id)
 }

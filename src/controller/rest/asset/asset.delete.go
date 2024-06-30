@@ -13,6 +13,7 @@ func (a AssetAPI) deleteAsset(c *gin.Context) {
 	err := a.service.Delete(c.Request.Context(), asset.ID)
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
+		return
 	}
 	c.JSON(http.StatusOK, asset)
 }

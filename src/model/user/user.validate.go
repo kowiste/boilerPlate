@@ -1,8 +1,17 @@
 package user
 
-import "context"
+import (
+	"boiler/src/model/validator"
+	"context"
+
+	"github.com/google/uuid"
+)
 
 func (u *User) Validate(c context.Context) (err error) {
-	
-	return
+	u.ID = uuid.NewString()
+	validate, err := validator.Get()
+	if err!=nil{
+		return
+	}
+	return validate.Struct(u)
 }

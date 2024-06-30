@@ -1,7 +1,6 @@
 package kafka
 
 import (
-	"boiler/src/model/user"
 	userservice "boiler/src/service/user"
 	"context"
 	"encoding/json"
@@ -36,10 +35,10 @@ func (k Kafka) onMessage(data []byte) {
 }
 func (k Kafka) createUser(data []byte) {
 	//modify data from kafka to match user create model
-	user := new(user.User)
+	user := k.service.GetUser()
 	json.Unmarshal(data, user)
 	ctx := context.Background()
-	id, err := k.service.Create(ctx, user)
+	id, err := k.service.Create(ctx)
 	if err != nil {
 		//someting error
 	}

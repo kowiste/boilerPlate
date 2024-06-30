@@ -11,6 +11,7 @@ func (a AssetAPI) getAssets(c *gin.Context) {
 	assets, err := a.service.Get(c.Request.Context())
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
+		return
 	}
 	c.JSON(http.StatusOK, assets)
 }
@@ -21,6 +22,7 @@ func (a AssetAPI) getAssetByID(c *gin.Context) {
 	asset, err := a.service.GetByID(c.Request.Context(), asset.ID)
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
+		return
 	}
 	c.JSON(http.StatusOK, asset)
 }

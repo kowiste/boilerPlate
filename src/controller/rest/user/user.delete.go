@@ -13,6 +13,7 @@ func (a UserAPI) deleteUser(c *gin.Context) {
 	err := a.service.Delete(c,user.ID)
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
+		return
 	}
 	c.Status(http.StatusOK)
 }

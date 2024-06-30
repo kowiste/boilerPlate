@@ -24,14 +24,14 @@ func (m MySQL) GetUsers(c context.Context) (users user.Users, err error) {
 }
 func (m MySQL) GetUserByID(c context.Context, id string) (u *user.User, err error) {
 	u=new(user.User)
-	result := m.db.Find(&u)
+	result := m.db.Where("id=?",id).First(&u)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 	return
 }
 func (m MySQL) UpdateUser(c context.Context,  user *user.User) (err error) {
-	result := m.db.Model(user).Where("id = ?", user.ID).Updates(user)
+	result := m.db.Where("id = ?", user.ID).Updates(user)
 	if result.Error != nil {
 		err = result.Error
 		return
