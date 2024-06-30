@@ -7,3 +7,7 @@ type Asset struct {
 }
 
 type Assets []Asset
+
+func (a Asset) TableName() string {
+	return "users"
+}

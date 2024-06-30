@@ -1,11 +1,8 @@
 package main
 
 import (
-	"boiler/src/api"
-	"boiler/src/api/rest"
 	conf "boiler/src/config"
-	"boiler/src/db"
-	"boiler/src/db/mysql"
+	"boiler/src/core"
 	"fmt"
 	"os"
 	"os/signal"
@@ -25,19 +22,7 @@ func main() {
 		fmt.Println("Error getting config:", err)
 		return
 	}
-	var service api.IAPI = rest.New()
-	err = service.Init()
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	db.New(mysql.New())
-	database, err := db.Get()
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	err = database.Init()
+	err = core.Init()
 	if err != nil {
 		fmt.Println(err.Error())
 		return

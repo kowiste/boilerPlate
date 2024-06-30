@@ -5,5 +5,5 @@
     "DatabasePassword": "example",
     "DatabaseName": "user",
     "ServiceName": "reporting",
-    "ServicePort": "8084"
+    "ServicePort": "9084"
 }

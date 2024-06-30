@@ -5,5 +5,9 @@ type User struct {
 	Name     string `json:"name"`
 	LastName string `json:"lastName"`
 }
-
 type Users []User
+
+func (u User) TableName() string {
+	return "users"
+}
+
