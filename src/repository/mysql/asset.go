@@ -15,7 +15,7 @@ func (m MySQL) CreateAsset(c context.Context, asset *asset.Asset) (id string, er
 	return
 }
 
-func (m MySQL) GetAssets(c context.Context) (assets []asset.Asset, err error) {
+func (m MySQL) Assets(c context.Context) (assets asset.Assets, err error) {
 	assets=make([]asset.Asset, 0)
 	result := m.db.Find(&assets)
 	if result.Error != nil {
@@ -23,7 +23,7 @@ func (m MySQL) GetAssets(c context.Context) (assets []asset.Asset, err error) {
 	}
 	return
 }
-func (m MySQL) GetAssetByID(c context.Context, id string) (asset *asset.Asset, err error) {
+func (m MySQL) AssetByID(c context.Context, id string) (asset *asset.Asset, err error) {
 	result := m.db.Find(&asset)
 	if result.Error != nil {
 		return nil, result.Error

@@ -1,7 +1,17 @@
 package asset
 
-import "context"
+import (
+	"boiler/pkg/validator"
+	"context"
+
+	"github.com/google/uuid"
+)
 
 func (a *Asset) Validate(c context.Context) (err error) {
-	return
+	a.ID = uuid.NewString()
+	validate, err := validator.Get()
+	if err != nil {
+		return
+	}
+	return validate.Struct(a)
 }

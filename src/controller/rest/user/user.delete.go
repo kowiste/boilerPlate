@@ -1,6 +1,7 @@
 package userapi
 
 import (
+	"boiler/pkg/errors"
 	"boiler/src/model/user"
 	"net/http"
 
@@ -10,9 +11,9 @@ import (
 func (a UserAPI) deleteUser(c *gin.Context) {
 	user := new(user.User)
 	user.ID = c.Param("id")
-	err := a.service.Delete(c,user.ID)
+	err := a.service.Delete(c, user.ID)
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		errors.RestError(c.Writer, err)
 		return
 	}
 	c.Status(http.StatusOK)

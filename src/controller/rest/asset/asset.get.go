@@ -1,6 +1,7 @@
 package assetapi
 
 import (
+	"boiler/pkg/errors"
 	"boiler/src/model/asset"
 	"net/http"
 
@@ -8,9 +9,9 @@ import (
 )
 
 func (a AssetAPI) getAssets(c *gin.Context) {
-	assets, err := a.service.Get(c.Request.Context())
+	assets, err := a.service.Assets(c.Request.Context())
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		errors.RestError(c.Writer, err)
 		return
 	}
 	c.JSON(http.StatusOK, assets)
@@ -19,9 +20,9 @@ func (a AssetAPI) getAssets(c *gin.Context) {
 func (a AssetAPI) getAssetByID(c *gin.Context) {
 	asset := new(asset.Asset)
 	asset.ID = c.Param("id")
-	asset, err := a.service.GetByID(c.Request.Context(), asset.ID)
+	asset, err := a.service.AssetByID(c.Request.Context(), asset.ID)
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		errors.RestError(c.Writer, err)
 		return
 	}
 	c.JSON(http.StatusOK, asset)

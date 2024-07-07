@@ -1,6 +1,7 @@
 package assetapi
 
 import (
+	"boiler/pkg/errors"
 	"boiler/src/model/asset"
 	"net/http"
 
@@ -12,7 +13,7 @@ func (a AssetAPI) deleteAsset(c *gin.Context) {
 	asset.ID = c.Param("id")
 	err := a.service.Delete(c.Request.Context(), asset.ID)
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		errors.RestError(c.Writer, err)
 		return
 	}
 	c.JSON(http.StatusOK, asset)

@@ -1,6 +1,8 @@
 package userapi
 
 import (
+	"boiler/pkg/errors"
+	"boiler/pkg/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,13 +12,15 @@ func (a UserAPI) createUser(c *gin.Context) {
 	user := a.service.GetUser()
 	err := c.ShouldBind(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		errors.RestError(c.Writer, err)
 		return
 	}
 	id, err := a.service.Create(c)
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		errors.RestError(c.Writer, err)
 		return
 	}
-	c.JSON(http.StatusOK, id)
+	c.JSON(http.StatusOK, response.CreateResponse{
+		ID: id,
+	})
 }

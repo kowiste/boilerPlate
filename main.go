@@ -19,7 +19,6 @@ func main() {
 	}
 	_, err = config.Get[conf.BoilerConfig]()
 	if err != nil {
-		fmt.Println("Error getting config:", err)
 		return
 	}
 	err = core.Init()

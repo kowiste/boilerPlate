@@ -1,7 +1,7 @@
 package user
 
 import (
-	"boiler/src/model/validator"
+	"boiler/pkg/validator"
 	"context"
 
 	"github.com/google/uuid"

@@ -1,6 +1,7 @@
 package userapi
 
 import (
+	"boiler/pkg/errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,13 +11,13 @@ func (a UserAPI) updateUser(c *gin.Context) {
 	user := a.service.GetUser()
 	err := c.ShouldBind(&user)
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		errors.RestError(c.Writer, err)
 		return
 	}
 	user.ID = c.Param("id")
 	err = a.service.Update(c)
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		errors.RestError(c.Writer, err)
 		return
 	}
 	c.Status(http.StatusOK)

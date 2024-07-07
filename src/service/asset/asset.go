@@ -29,12 +29,12 @@ func (serv AssetService) Create(c context.Context) (id string, err error) {
 	return serv.db.CreateAsset(c, serv.asset)
 }
 
-func (serv AssetService) Get(c context.Context) (users []asset.Asset, err error) {
-	return serv.db.GetAssets(c)
+func (serv AssetService) Assets(c context.Context) (users []asset.Asset, err error) {
+	return serv.db.Assets(c)
 }
 
-func (serv AssetService) GetByID(c context.Context, id string) (users *asset.Asset, err error) {
-	return serv.db.GetAssetByID(c, id)
+func (serv AssetService) AssetByID(c context.Context, id string) (users *asset.Asset, err error) {
+	return serv.db.AssetByID(c, id)
 }
 
 func (serv AssetService) Update(c context.Context) (err error) {

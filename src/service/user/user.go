@@ -33,12 +33,12 @@ func (serv UserService) Create(c context.Context) (id string, err error) {
 	return serv.db.CreateUser(c, serv.user)
 }
 
-func (serv UserService) Get(c context.Context) (users []user.User, err error) {
-	return serv.db.GetUsers(c)
+func (serv UserService) Users(c context.Context) (users []user.User, err error) {
+	return serv.db.Users(c)
 }
 
-func (serv UserService) GetByID(c context.Context) (users *user.User, err error) {
-	return serv.db.GetUserByID(c, serv.user.ID)
+func (serv UserService) UserByID(c context.Context) (users *user.User, err error) {
+	return serv.db.UserByID(c, serv.user.ID)
 }
 
 func (serv UserService) Update(c context.Context) (err error) {
@@ -48,6 +48,12 @@ func (serv UserService) Update(c context.Context) (err error) {
 	}
 	return serv.db.UpdateUser(c, serv.user)
 }
+// Delete removes a user from the database by ID.
+// Parameters:
+// - c: The context for the operation.
+// - id: The user ID to delete.
+// Returns:
+// - err: An error if the deletion fails.
 func (serv UserService) Delete(c context.Context, id string) (err error) {
 	return serv.db.DeleteUser(c, id)
 }

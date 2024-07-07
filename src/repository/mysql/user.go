@@ -15,14 +15,14 @@ func (m MySQL) CreateUser(c context.Context, user *user.User) (id string, err er
 	return
 }
 
-func (m MySQL) GetUsers(c context.Context) (users user.Users, err error) {
+func (m MySQL) Users(c context.Context) (users user.Users, err error) {
 	result := m.db.Find(&users)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 	return
 }
-func (m MySQL) GetUserByID(c context.Context, id string) (u *user.User, err error) {
+func (m MySQL) UserByID(c context.Context, id string) (u *user.User, err error) {
 	u=new(user.User)
 	result := m.db.Where("id=?",id).First(&u)
 	if result.Error != nil {

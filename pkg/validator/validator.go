@@ -1,13 +1,11 @@
 package validator
 
 import (
-	"fmt"
+	"boiler/pkg/errors"
 	"sync"
 
 	"github.com/go-playground/validator/v10"
 )
-
-//move to common package
 
 var (
 	instance *validator.Validate
@@ -22,7 +20,7 @@ func New() *validator.Validate {
 }
 func Get() (*validator.Validate, error) {
 	if instance == nil {
-		return nil, fmt.Errorf("repository not set")
+		return nil, errors.New("validator not set", errors.EErrorServerInternal)
 	}
 	return instance, nil
 }
