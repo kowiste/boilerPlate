@@ -23,6 +23,7 @@ func TestRepository(t *testing.T) {
 	//Ok
 	user.Name = "Pablo"
 	user.LastName = "Garcia"
+	user.Age = 45
 	err = user.Validate(c)
 	assert.Nil(t, err)
 }

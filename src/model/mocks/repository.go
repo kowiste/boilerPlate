@@ -1,4 +1,3 @@
-// +build ignore
 package mocks
 
 import (
@@ -27,7 +26,7 @@ func (m *MockRepository) CreateUser(ctx context.Context, u *user.User) (string, 
 }
 
 // Users returns all users
-func (m *MockRepository) Users(ctx context.Context) (user.Users, error) {
+func (m *MockRepository) Users(ctx context.Context, input *user.FindUsersInput) (user.Users, error) {
 	args := m.Called(ctx)
 	if users, ok := args.Get(0).(user.Users); ok {
 		return users, args.Error(1)

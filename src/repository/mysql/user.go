@@ -15,7 +15,7 @@ func (m MySQL) CreateUser(c context.Context, user *user.User) (id string, err er
 	return
 }
 
-func (m MySQL) Users(c context.Context) (users user.Users, err error) {
+func (m MySQL) Users(c context.Context, input *user.FindUsersInput) (users user.Users, err error) {
 	result := m.db.Find(&users)
 	if result.Error != nil {
 		return nil, result.Error

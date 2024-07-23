@@ -28,10 +28,7 @@ db.asset.insertMany([
 ])
 
 // User Database
-db.user.createIndex(
-  { id: 1 },
-  { unique: true }
-)
+db.user.createIndex({ id: 1 }, { unique: true })
 
 // Inserting Users with fixed UUID-like string IDs
 db.user.insertMany([
@@ -39,16 +36,19 @@ db.user.insertMany([
     id: '880e8400-e29b-41d4-a716-446655440000',
     name: 'John',
     lastName: 'Doe',
+    age: 23,
   },
   {
     id: '990e8400-e29b-41d4-a716-446655440000',
     name: 'Jane',
     lastName: 'Smith',
+    age: 78,
   },
   {
     id: 'aaa0e8400-e29b-41d4-a716-446655440000',
     name: 'Alice',
     lastName: 'Johnson',
+    age: 45
   },
 ])
 
