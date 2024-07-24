@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package asset;
+
+option go_package = "proto/asset";
+
+// Asset message definition
+message Asset {
+    string id = 1;
+    string parent_id = 2;
+    string description = 3;
+}
+
+// Request message for getting by ID
+message GetByIdRequest {
+    string id = 1;
+}
+
+// Request message for getting all assets with optional parent_id filter
+message GetAllAssetsRequest {
+    string parent_id = 1;  // Optional filter
+}
+
+// Response message for returning multiple assets
+message GetAllAssetsResponse {
+    repeated Asset assets = 1;
+}
+
+// Response message for returning a single asset
+message GetAssetByIdResponse {
+    Asset asset = 1;
+}
+
+// Service definition for Asset
+service AssetService {
+    // Get all assets with optional parent_id filter
+    rpc GetAllAssets(GetAllAssetsRequest) returns (GetAllAssetsResponse);
+
+    // Get asset by ID
+    rpc GetAssetById(GetByIdRequest) returns (GetAssetByIdResponse);
+}
