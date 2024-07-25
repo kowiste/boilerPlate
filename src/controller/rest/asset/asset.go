@@ -20,11 +20,15 @@ func New() (api *AssetAPI, err error) {
 
 func (a *AssetAPI) Routes(r *gin.Engine) {
 	r.GET("/assets", a.getAssets)
-	userGroup := r.Group("asset")
+	assetGroup := r.Group("asset")
 	{
-		userGroup.POST("", a.createAsset)
-		userGroup.GET(":id", a.getAssetByID)
-		userGroup.PUT(":id", a.updateAsset)
-		userGroup.DELETE(":id", a.deleteAsset)
+		assetGroup.POST("", a.createAsset)
+		assetIDGroup := assetGroup.Group(":id")
+		{
+			assetIDGroup.GET("", a.getAssetByID)
+			assetIDGroup.PUT("", a.updateAsset)
+			assetIDGroup.DELETE("", a.deleteAsset)
+		}
+
 	}
 }

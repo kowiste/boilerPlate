@@ -1,9 +1,14 @@
 {
+    "Controllers": [
+        "grpc",
+        "rest"
+    ],
     "DatabaseURL": "localhost",
     "DatabasePort": "9306",
     "DatabaseUser": "root",
     "DatabasePassword": "example",
     "DatabaseName": "user",
     "ServiceName": "reporting",
-    "ServicePort": "9084"
+    "ServicePort": "9084",
+    "GRPCPort": "50051"
 }

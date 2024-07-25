@@ -12,7 +12,7 @@ import (
 // Returns:
 // - users: A list of users that match the criteria.
 // - err: An error if the retrieval fails.
-func (serv UserService) Users(c context.Context, input *user.FindUsersInput) (users []user.User, err error) {
+func (serv UserService) Users(c context.Context, input *user.FindUsersInput) (users user.Users, err error) {
 	return serv.db.Users(c, input)
 }
 

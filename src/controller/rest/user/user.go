@@ -23,7 +23,7 @@ func (a *UserAPI) Routes(r *gin.Engine) {
 	userGroup := r.Group("user")
 	{
 		userGroup.POST("", a.createUser)
-		userIDGroup := userGroup.Group("id")
+		userIDGroup := userGroup.Group(":id")
 		{
 			userIDGroup.GET("", a.getUserByID)
 			userIDGroup.PUT("", a.updateUser)

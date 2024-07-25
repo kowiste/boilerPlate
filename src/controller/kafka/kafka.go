@@ -15,8 +15,9 @@ func New() (api *Kafka) {
 	return &Kafka{}
 }
 
-func (k Kafka) Init() {
+func (k Kafka) Init() (err error) {
 	//init kafka bla bla
+	return
 }
 
 //	{
