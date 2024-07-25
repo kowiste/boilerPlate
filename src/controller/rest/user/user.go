@@ -23,8 +23,12 @@ func (a *UserAPI) Routes(r *gin.Engine) {
 	userGroup := r.Group("user")
 	{
 		userGroup.POST("", a.createUser)
-		userGroup.GET(":id", a.getUserByID)
-		userGroup.PUT(":id", a.updateUser)
-		userGroup.DELETE(":id", a.deleteUser)
+		userIDGroup := userGroup.Group("id")
+		{
+			userIDGroup.GET("", a.getUserByID)
+			userIDGroup.PUT("", a.updateUser)
+			userIDGroup.DELETE("", a.deleteUser)
+		}
+
 	}
 }

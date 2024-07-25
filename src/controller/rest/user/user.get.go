@@ -35,9 +35,8 @@ func (a UserAPI) getUsers(c *gin.Context) {
 }
 
 func (a UserAPI) getUserByID(c *gin.Context) {
-	user := a.service.GetUser()
-	user.ID = c.Param("id")
-	user, err := a.service.UserByID(c)
+	id := c.Param("id")
+	user, err := a.service.UserByID(c, id)
 	if err != nil {
 		errors.RestError(c.Writer, err)
 		return
