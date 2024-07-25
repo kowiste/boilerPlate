@@ -17,7 +17,7 @@ var (
 	once     sync.Once
 )
 
-func New(db repository.IRepository) (serv *AssetService, err error) {
+func New(db repository.IRepository) (serv *AssetService) {
 
 	once.Do(func() {
 
@@ -26,10 +26,8 @@ func New(db repository.IRepository) (serv *AssetService, err error) {
 			db:    db,
 		}
 	})
-	if err != nil {
-		return nil, err
-	}
-	return instance, nil
+
+	return instance
 }
 
 func Get() (*AssetService, error) {
