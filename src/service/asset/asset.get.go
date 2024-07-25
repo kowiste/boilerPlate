@@ -11,7 +11,7 @@ import (
 // Returns:
 // - users: A list of assets.
 // - err: An error if the retrieval fails.
-func (serv *AssetService) Assets(c context.Context) (users []asset.Asset, err error) {
+func (serv *AssetService) Assets(c context.Context) (users asset.Assets, err error) {
 	return serv.db.Assets(c)
 }
 

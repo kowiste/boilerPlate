@@ -7,9 +7,11 @@ import (
 
 func (a *GRPC) GetAllAssets(ctx context.Context, req *pbAsset.GetAllAssetsRequest) (*pbAsset.GetAllAssetsResponse, error) {
 	//assets, err := a.serviceAsset.GetAsset(req.ParentId)
-	assets := a.serviceAsset.GetAsset()
-
-	return &pbAsset.GetAllAssetsResponse{Assets: assets}, nil
+	assets, err := a.serviceAsset.Assets(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &pbAsset.GetAllAssetsResponse{Assets: assets.ToGRPC()}, nil
 }
 
 func (a *GRPC) GetAssetById(ctx context.Context, req *pbAsset.GetByIdRequest) (*pbAsset.GetAssetByIdResponse, error) {
@@ -17,5 +19,5 @@ func (a *GRPC) GetAssetById(ctx context.Context, req *pbAsset.GetByIdRequest) (*
 	if err != nil {
 		return nil, err
 	}
-	return &pbAsset.GetAssetByIdResponse{Asset: asset}, nil
+	return &pbAsset.GetAssetByIdResponse{Asset: asset.ToGRPC()}, nil
 }

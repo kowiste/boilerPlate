@@ -19,8 +19,8 @@ type GRPC struct {
 }
 
 func New() (g *GRPC, err error) {
-	sU, err := userservice.New()
-	sA, err := assetservice.New()
+	sU, err := userservice.Get()
+	sA, err := assetservice.Get()
 	return &GRPC{
 		server: grpc.NewServer(),
 		serviceUser: sU,
