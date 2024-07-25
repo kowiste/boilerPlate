@@ -1,9 +1,10 @@
 package assetservice
 
 import (
+	"boiler/pkg/errors"
 	"boiler/src/model/asset"
 	"boiler/src/repository"
-	"context"
+	"sync"
 )
 
 type AssetService struct {
@@ -11,35 +12,33 @@ type AssetService struct {
 	db    repository.IRepository
 }
 
-func New() (serv *AssetService, err error) {
-	database, err := repository.Get()
+var (
+	instance *AssetService
+	once     sync.Once
+)
+
+func New(db repository.IRepository) (serv *AssetService, err error) {
+
+	once.Do(func() {
+
+		instance = &AssetService{
+			asset: new(asset.Asset),
+			db:    db,
+		}
+	})
 	if err != nil {
-		return
+		return nil, err
 	}
-	return &AssetService{
-		asset: new(asset.Asset),
-		db:    database,
-	}, nil
+	return instance, nil
 }
+
+func Get() (*AssetService, error) {
+	if instance == nil {
+		return nil, errors.New("AssetService not set", errors.EErrorServerInternal)
+	}
+	return instance, nil
+}
+
 func (serv *AssetService) GetAsset() *asset.Asset {
 	return serv.asset
-}
-func (serv AssetService) Create(c context.Context) (id string, err error) {
-	serv.asset.Validate(c)
-	return serv.db.CreateAsset(c, serv.asset)
-}
-
-func (serv AssetService) Assets(c context.Context) (users []asset.Asset, err error) {
-	return serv.db.Assets(c)
-}
-
-func (serv AssetService) AssetByID(c context.Context, id string) (users *asset.Asset, err error) {
-	return serv.db.AssetByID(c, id)
-}
-
-func (serv AssetService) Update(c context.Context) (err error) {
-	return serv.db.UpdateAsset(c, serv.asset)
-}
-func (serv AssetService) Delete(c context.Context, id string) (err error) {
-	return serv.db.DeleteAsset(c, id)
 }

@@ -11,7 +11,7 @@ type UserAPI struct {
 }
 
 func New() (api *UserAPI, err error) {
-	s, err := userservice.New()
+	s, err := userservice.Get()
 	api = &UserAPI{
 		service: s,
 	}

@@ -11,7 +11,7 @@ type AssetAPI struct {
 }
 
 func New() (api *AssetAPI, err error) {
-	s, err := assetservice.New()
+	s, err := assetservice.Get()
 	api = &AssetAPI{
 		service: s,
 	}

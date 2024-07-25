@@ -1,11 +1,13 @@
 package core
 
 import (
+	"boiler/pkg/validator"
 	"boiler/src/controller"
 	"boiler/src/controller/rest"
-	"boiler/pkg/validator"
 	"boiler/src/repository"
 	"boiler/src/repository/mysql"
+	assetservice "boiler/src/service/asset"
+	userservice "boiler/src/service/user"
 )
 
 func Init() (err error) {
@@ -21,6 +23,8 @@ func Init() (err error) {
 	if err != nil {
 		return
 	}
+	assetservice.New(database)
+	userservice.New(database)
 	var ctr controller.IController = rest.New()
 	err = ctr.Init()
 	if err != nil {
