@@ -1,9 +1,10 @@
 package core
 
 import (
+	"boiler/pkg/common/controller"
 	"boiler/pkg/validator"
 	conf "boiler/src/config"
-	"boiler/src/controller"
+	ownControl "boiler/src/controller"
 	"boiler/src/controller/grpc"
 	"boiler/src/controller/kafka"
 	"boiler/src/controller/rest"
@@ -37,14 +38,14 @@ func Init() (err error) {
 	}
 	assetservice.New(database)
 	userservice.New(database)
-	ctr := make([]controller.IController, 0)
+	ctr := make([]ownControl.IController, 0)
 	for i := range cnf.Controllers {
 		switch cnf.Controllers[i] {
-		case "rest":
+		case controller.Rest:
 			ctr = append(ctr, rest.New())
-		case "grpc":
+		case controller.GRPC:
 			ctr = append(ctr, grpc.New())
-		case "kafka":
+		case controller.Nats:
 			ctr = append(ctr, kafka.New())
 		}
 		err = ctr[i].Init()
