@@ -36,8 +36,11 @@ func Init() (err error) {
 	if err != nil {
 		return
 	}
+	//Init services
 	assetservice.New(database)
 	userservice.New(database)
+	
+	//Init controllers
 	ctr := make([]ownControl.IController, 0)
 	for i := range cnf.Controllers {
 		switch cnf.Controllers[i] {

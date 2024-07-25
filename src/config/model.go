@@ -1,6 +1,7 @@
 package config
 
 type BoilerConfig struct {
+	Enviroment         string   `json:"Enviroment" env:"ENVIROMENT"`
 	ControllersActived string   `json:"ControllersActived" env:"CONTROLLERS_ACTIVE"`
 	Controllers        []string `json:"Controllers" `
 	DatabaseURL        string   `json:"DatabaseURL" env:"DATABASE_URL"`

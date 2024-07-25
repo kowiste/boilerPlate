@@ -1,4 +1,5 @@
 {
+    "Enviroment": "local",
     "Controllers": [
         "grpc",
         "rest"
