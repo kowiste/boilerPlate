@@ -54,7 +54,7 @@ func (a *GRPC) Init() (err error) {
 		return err
 	}
 
-	//pbAsset.RegisterAssetServiceServer(a.server, a)
+	pbAsset.RegisterAssetServiceServer(a.server, a)
 	pbUser.RegisterUserServiceServer(a.server, a)
 
 	log.Println("Starting gRPC server on port " + c.GRPCPort)

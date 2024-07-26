@@ -1,4 +1,4 @@
-module boiler
+module github.com/Kowiste/boilerPlate
 
 go 1.22.2
 
