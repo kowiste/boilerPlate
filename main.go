@@ -1,12 +1,13 @@
 package main
 
 import (
-	conf "boiler/src/config"
-	"boiler/src/core"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
+
+	conf "github.com/kowiste/boilerplatesrc/config"
+	"github.com/kowiste/boilerplatesrc/core"
 
 	"github.com/kowiste/config"
 )

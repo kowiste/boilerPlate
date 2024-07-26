@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"boiler/src/model/user"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/user"
 )
 
 type IUserRepository interface {

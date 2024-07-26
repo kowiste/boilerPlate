@@ -1,8 +1,9 @@
 package mysql
 
 import (
-	"boiler/src/model/user"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/user"
 )
 
 func (m MySQL) CreateUser(c context.Context, user *user.User) (id string, err error) {
@@ -23,14 +24,14 @@ func (m MySQL) Users(c context.Context, input *user.FindUsersInput) (users user.
 	return
 }
 func (m MySQL) UserByID(c context.Context, id string) (u *user.User, err error) {
-	u=new(user.User)
-	result := m.db.Where("id=?",id).First(&u)
+	u = new(user.User)
+	result := m.db.Where("id=?", id).First(&u)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 	return
 }
-func (m MySQL) UpdateUser(c context.Context,  user *user.User) (err error) {
+func (m MySQL) UpdateUser(c context.Context, user *user.User) (err error) {
 	result := m.db.Where("id = ?", user.ID).Updates(user)
 	if result.Error != nil {
 		err = result.Error

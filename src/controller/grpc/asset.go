@@ -1,8 +1,9 @@
 package grpc
 
 import (
-	pbAsset "boiler/doc/proto/asset"
 	"context"
+
+	pbAsset "github.com/kowiste/boilerplate/doc/proto/asset"
 )
 
 func (a *GRPC) GetAllAssets(ctx context.Context, req *pbAsset.GetAllAssetsRequest) (*pbAsset.GetAllAssetsResponse, error) {

@@ -1,8 +1,9 @@
 package validator
 
 import (
-	"boiler/pkg/errors"
 	"sync"
+
+	"github.com/kowiste/boilerplatepkg/errors"
 
 	"github.com/go-playground/validator/v10"
 )

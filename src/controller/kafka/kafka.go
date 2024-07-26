@@ -1,10 +1,11 @@
 package kafka
 
 import (
-	userservice "boiler/src/service/user"
 	"context"
 	"encoding/json"
 	"fmt"
+
+	userservice "github.com/kowiste/boilerplatesrc/service/user"
 )
 
 type Kafka struct {

@@ -1,8 +1,9 @@
 package mysql
 
 import (
-	"boiler/src/model/asset"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/asset"
 )
 
 func (m MySQL) CreateAsset(c context.Context, asset *asset.Asset) (id string, err error) {
@@ -16,7 +17,7 @@ func (m MySQL) CreateAsset(c context.Context, asset *asset.Asset) (id string, er
 }
 
 func (m MySQL) Assets(c context.Context) (assets asset.Assets, err error) {
-	assets=make([]asset.Asset, 0)
+	assets = make([]asset.Asset, 0)
 	result := m.db.Find(&assets)
 	if result.Error != nil {
 		return nil, result.Error
@@ -30,7 +31,7 @@ func (m MySQL) AssetByID(c context.Context, id string) (asset *asset.Asset, err 
 	}
 	return
 }
-func (m MySQL) UpdateAsset(c context.Context,  asset *asset.Asset) (err error) {
+func (m MySQL) UpdateAsset(c context.Context, asset *asset.Asset) (err error) {
 	result := m.db.Model(asset).Where("id = ?", asset.ID).Updates(asset)
 	if result.Error != nil {
 		err = result.Error

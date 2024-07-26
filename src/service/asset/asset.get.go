@@ -1,8 +1,9 @@
 package assetservice
 
 import (
-	"boiler/src/model/asset"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/asset"
 )
 
 // Assets retrieves a list of assets from the database.

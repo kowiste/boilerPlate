@@ -1,7 +1,7 @@
 package user
 
 import (
-	pbUser "boiler/doc/proto/user"
+	pbUser "github.com/kowiste/boilerplatedoc/proto/user"
 )
 
 type User struct {

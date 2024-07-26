@@ -1,8 +1,9 @@
 package asset
 
 import (
-	"boiler/pkg/validator"
 	"context"
+
+	"github.com/kowiste/boilerplatepkg/validator"
 
 	"github.com/google/uuid"
 )

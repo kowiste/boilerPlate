@@ -1,10 +1,11 @@
 package repository
 
 import (
-	"boiler/src/model/mocks"
-	"boiler/src/model/user"
 	"context"
 	"testing"
+
+	"github.com/kowiste/boilerplatesrc/model/mocks"
+	"github.com/kowiste/boilerplatesrc/model/user"
 
 	"github.com/stretchr/testify/assert"
 )

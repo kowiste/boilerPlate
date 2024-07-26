@@ -1,9 +1,10 @@
 package asset
 
 import (
-	"boiler/pkg/validator"
 	"context"
 	"testing"
+
+	"github.com/kowiste/boilerplatepkg/validator"
 
 	"github.com/stretchr/testify/assert"
 )

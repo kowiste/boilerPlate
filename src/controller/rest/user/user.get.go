@@ -1,10 +1,11 @@
 package userapi
 
 import (
-	"boiler/pkg/errors"
-	"boiler/src/model/user"
 	"net/http"
 	"strconv"
+
+	"github.com/kowiste/boilerplate/pkg/errors"
+	"github.com/kowiste/boilerplate/src/model/user"
 
 	"github.com/gin-gonic/gin"
 )

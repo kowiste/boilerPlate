@@ -1,8 +1,9 @@
 package assetapi
 
 import (
-	"boiler/pkg/errors"
 	"net/http"
+
+	"github.com/kowiste/boilerplatepkg/errors"
 
 	"github.com/gin-gonic/gin"
 )

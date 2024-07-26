@@ -1,18 +1,19 @@
 package core
 
 import (
-	"boiler/pkg/common/controller"
-	"boiler/pkg/validator"
-	conf "boiler/src/config"
-	ownControl "boiler/src/controller"
-	"boiler/src/controller/grpc"
-	"boiler/src/controller/kafka"
-	"boiler/src/controller/rest"
-	"boiler/src/repository"
-	"boiler/src/repository/mysql"
-	assetservice "boiler/src/service/asset"
-	userservice "boiler/src/service/user"
 	"fmt"
+
+	"github.com/kowiste/boilerplate/pkg/common/controller"
+	"github.com/kowiste/boilerplate/pkg/validator"
+	conf "github.com/kowiste/boilerplate/src/config"
+	ownControl "github.com/kowiste/boilerplate/src/controller"
+	"github.com/kowiste/boilerplate/src/controller/grpc"
+	"github.com/kowiste/boilerplate/src/controller/kafka"
+	"github.com/kowiste/boilerplate/src/controller/rest"
+	"github.com/kowiste/boilerplate/src/repository"
+	"github.com/kowiste/boilerplate/src/repository/mysql"
+	assetservice "github.com/kowiste/boilerplate/src/service/asset"
+	userservice "github.com/kowiste/boilerplate/src/service/user"
 
 	"github.com/kowiste/config"
 )

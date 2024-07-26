@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	conf "boiler/src/config"
+	conf "github.com/kowiste/boilerplatesrc/config"
 
 	"github.com/kowiste/config"
 	"go.mongodb.org/mongo-driver/mongo"

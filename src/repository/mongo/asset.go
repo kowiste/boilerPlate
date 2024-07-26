@@ -1,8 +1,9 @@
 package mongo
 
 import (
-	"boiler/src/model/asset"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/asset"
 
 	"go.mongodb.org/mongo-driver/bson"
 )

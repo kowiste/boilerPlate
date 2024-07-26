@@ -1,7 +1,7 @@
 package asset
 
 import (
-	pbAsset "boiler/doc/proto/asset"
+	pbAsset "github.com/kowiste/boilerplatedoc/proto/asset"
 )
 
 type Asset struct {

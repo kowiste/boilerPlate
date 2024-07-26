@@ -1,9 +1,10 @@
 package mocks
 
 import (
-	"boiler/src/model/asset"
-	"boiler/src/model/user"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/asset"
+	"github.com/kowiste/boilerplatesrc/model/user"
 
 	"github.com/stretchr/testify/mock"
 )

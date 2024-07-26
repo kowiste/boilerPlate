@@ -1,9 +1,10 @@
 package grpc
 
 import (
-	pbUser "boiler/doc/proto/user"
-	"boiler/src/model/user"
 	"context"
+
+	pbUser "github.com/kowiste/boilerplate/doc/proto/user"
+	"github.com/kowiste/boilerplate/src/model/user"
 )
 
 func (a *GRPC) GetAllUsers(ctx context.Context, req *pbUser.GetAllUsersRequest) (*pbUser.GetAllUsersResponse, error) {

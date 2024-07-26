@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"boiler/pkg/errors"
 	"sync"
+
+	"github.com/kowiste/boilerplate/pkg/errors"
 )
 
 type IRepository interface {

@@ -6,7 +6,7 @@ import (
     "time"
 
     "google.golang.org/grpc"
-		pbUser "github.com/Kowiste/boilerPlate/doc/proto/user"
+		pbUser "github.com/Kowiste/boilerPlate"
 )
 
 const (

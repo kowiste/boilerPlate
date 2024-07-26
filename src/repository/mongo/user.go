@@ -1,8 +1,9 @@
 package mongo
 
 import (
-	"boiler/src/model/user"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/user"
 
 	"go.mongodb.org/mongo-driver/bson"
 )

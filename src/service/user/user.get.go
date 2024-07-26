@@ -1,8 +1,9 @@
 package userservice
 
 import (
-	"boiler/src/model/user"
 	"context"
+
+	"github.com/kowiste/boilerplatesrc/model/user"
 )
 
 // Users retrieves a list of users from the database based on the input criteria.

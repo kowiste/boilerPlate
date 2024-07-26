@@ -1,9 +1,10 @@
 package userapi
 
 import (
-	"boiler/pkg/errors"
-	"boiler/pkg/response"
 	"net/http"
+
+	"github.com/kowiste/boilerplatepkg/errors"
+	"github.com/kowiste/boilerplatepkg/response"
 
 	"github.com/gin-gonic/gin"
 )

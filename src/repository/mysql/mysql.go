@@ -1,10 +1,11 @@
 package mysql
 
 import (
-	conf "boiler/src/config"
-	"boiler/src/model/asset"
-	"boiler/src/model/user"
 	"fmt"
+
+	conf "github.com/kowiste/boilerplatesrc/config"
+	"github.com/kowiste/boilerplatesrc/model/asset"
+	"github.com/kowiste/boilerplatesrc/model/user"
 
 	"github.com/kowiste/config"
 	"gorm.io/driver/mysql"
@@ -45,5 +46,3 @@ func (m *MySQL) Init() (err error) {
 
 	return nil
 }
-
-

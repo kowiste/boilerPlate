@@ -1,10 +1,11 @@
 package userservice
 
 import (
-	"boiler/pkg/errors"
-	"boiler/src/model/user"
-	"boiler/src/repository"
 	"sync"
+
+	"github.com/kowiste/boilerplate/pkg/errors"
+	"github.com/kowiste/boilerplate/src/model/user"
+	"github.com/kowiste/boilerplate/src/repository"
 )
 
 type UserService struct {
