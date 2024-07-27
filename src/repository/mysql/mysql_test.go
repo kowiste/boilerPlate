@@ -1,10 +1,10 @@
 package mysql
 
 import (
-	"github.com/kowiste/boilerplatesrc/config"
-	"github.com/kowiste/boilerplatesrc/model/asset"
-	"github.com/kowiste/boilerplatesrc/model/user"
-	"github.com/kowiste/boilerplatesrc/mysql"
+	"github.com/kowiste/boilerplate/src/config"
+	"github.com/kowiste/boilerplate/src/model/asset"
+	"github.com/kowiste/boilerplate/src/model/user"
+	"github.com/kowiste/boilerplate/src/mysql"
 	"context"
 	"testing"
 

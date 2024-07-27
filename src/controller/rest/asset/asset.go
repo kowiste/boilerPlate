@@ -1,7 +1,7 @@
 package assetapi
 
 import (
-	assetservice "github.com/kowiste/boilerplatesrc/service/asset"
+	assetservice "github.com/kowiste/boilerplate/src/service/asset"
 
 	"github.com/gin-gonic/gin"
 )

@@ -3,7 +3,7 @@ package mysql
 import (
 	"context"
 
-	"github.com/kowiste/boilerplatesrc/model/user"
+	"github.com/kowiste/boilerplate/src/model/user"
 )
 
 func (m MySQL) CreateUser(c context.Context, user *user.User) (id string, err error) {

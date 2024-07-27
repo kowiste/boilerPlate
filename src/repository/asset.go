@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/kowiste/boilerplatesrc/model/asset"
+	"github.com/kowiste/boilerplate/src/model/asset"
 )
 
 type IAssetRepository interface {

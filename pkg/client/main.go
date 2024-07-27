@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	pbUser "github.com/kowiste/boilerplate/"
+	pbUser "github.com/kowiste/boilerplate/doc/proto/user"
 	"google.golang.org/grpc"
 )
 
@@ -24,7 +24,7 @@ func main() {
 	client := pbUser.NewUserServiceClient(conn)
 
 	// Call GetUserById
-	getUserById(client, "1")
+	//getUserById(client, "1")
 
 	// Call GetAllUsers
 	getAllUsers(client)

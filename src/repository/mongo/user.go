@@ -3,7 +3,7 @@ package mongo
 import (
 	"context"
 
-	"github.com/kowiste/boilerplatesrc/model/user"
+	"github.com/kowiste/boilerplate/src/model/user"
 
 	"go.mongodb.org/mongo-driver/bson"
 )

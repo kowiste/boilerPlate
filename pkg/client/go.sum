@@ -1,9 +1,7 @@
-github.com/kowiste/boilerplate/ v0.0.1 h1:eEC1INxGJ1PHJ1YsXlunTWyvLM236QUjN8tx8Uj7ie0=
-github.com/kowiste/boilerplate/ v0.0.1/go.mod h1:oueG2PIpq/UKT8rWU5kFG9NRx5k/zy17sTq7ReSsghM=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
-github.com/kowiste/config v0.1.13 h1:AhMIgFcagPmaY2dYSqu0aPsqFT/He21nJe8YdS0MiTU=
-github.com/kowiste/config v0.1.13/go.mod h1:kRN7n9/3VoDMfmmoK/eHmSW2gIuwPrFq/3R6fLqw/aU=
+github.com/kowiste/boilerplate v0.0.4 h1:jyrla9mbyD96cqDIajHlLsIAD3Bs9J4wgFrbKIK/20s=
+github.com/kowiste/boilerplate v0.0.4/go.mod h1:a93fOID8xCx3dGKk3s2ZWrB3LPbAwqCGymPSox6uf20=
 golang.org/x/net v0.26.0 h1:soB7SVo0PWrY4vPW/+ay0jKDNScG2X9wFeYlXIvJsOQ=
 golang.org/x/net v0.26.0/go.mod h1:5YKkiSynbBIh3p6iOc/vibscux0x38BZDkn8sCUPxHE=
 golang.org/x/sys v0.21.0 h1:rF+pYz3DAGSQAxAu1CbC7catZg4ebC4UIeIhKxBZvws=

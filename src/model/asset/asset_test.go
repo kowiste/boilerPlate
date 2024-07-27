@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/kowiste/boilerplatepkg/validator"
+	"github.com/kowiste/boilerplate/pkg/validator"
 
 	"github.com/stretchr/testify/assert"
 )

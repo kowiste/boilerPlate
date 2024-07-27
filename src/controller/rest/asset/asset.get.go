@@ -3,8 +3,8 @@ package assetapi
 import (
 	"net/http"
 
-	"github.com/kowiste/boilerplatepkg/errors"
-	"github.com/kowiste/boilerplatesrc/model/asset"
+	"github.com/kowiste/boilerplate/pkg/errors"
+	"github.com/kowiste/boilerplate/src/model/asset"
 
 	"github.com/gin-gonic/gin"
 )

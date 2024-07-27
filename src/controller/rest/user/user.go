@@ -1,7 +1,7 @@
 package userapi
 
 import (
-	userservice "github.com/kowiste/boilerplatesrc/service/user"
+	userservice "github.com/kowiste/boilerplate/src/service/user"
 
 	"github.com/gin-gonic/gin"
 )

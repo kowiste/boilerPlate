@@ -3,12 +3,11 @@ module testClient
 go 1.22.2
 
 require (
-	github.com/kowiste/boilerplate v0.0.3
+	github.com/kowiste/boilerplate v0.0.4
 	google.golang.org/grpc v1.65.0
 )
 
 require (
-	github.com/kowiste/config v0.1.13 // indirect
 	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect

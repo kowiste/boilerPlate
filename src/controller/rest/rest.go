@@ -1,9 +1,9 @@
 package rest
 
 import (
-	conf "github.com/kowiste/boilerplatesrc/config"
-	assetapi "github.com/kowiste/boilerplatesrc/controller/rest/asset"
-	userapi "github.com/kowiste/boilerplatesrc/controller/rest/user"
+	conf "github.com/kowiste/boilerplate/src/config"
+	assetapi "github.com/kowiste/boilerplate/src/controller/rest/asset"
+	userapi "github.com/kowiste/boilerplate/src/controller/rest/user"
 
 	"github.com/gin-gonic/gin"
 	"github.com/kowiste/config"

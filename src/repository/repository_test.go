@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/kowiste/boilerplatesrc/model/mocks"
-	"github.com/kowiste/boilerplatesrc/model/user"
+	"github.com/kowiste/boilerplate/src/model/mocks"
+	"github.com/kowiste/boilerplate/src/model/user"
 
 	"github.com/stretchr/testify/assert"
 )

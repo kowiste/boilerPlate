@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	userservice "github.com/kowiste/boilerplatesrc/service/user"
+	userservice "github.com/kowiste/boilerplate/src/service/user"
 )
 
 type Kafka struct {

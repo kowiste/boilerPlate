@@ -3,7 +3,7 @@ package validator
 import (
 	"sync"
 
-	"github.com/kowiste/boilerplatepkg/errors"
+	"github.com/kowiste/boilerplate/pkg/errors"
 
 	"github.com/go-playground/validator/v10"
 )

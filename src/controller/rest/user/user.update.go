@@ -3,7 +3,7 @@ package userapi
 import (
 	"net/http"
 
-	"github.com/kowiste/boilerplatepkg/errors"
+	"github.com/kowiste/boilerplate/pkg/errors"
 
 	"github.com/gin-gonic/gin"
 )

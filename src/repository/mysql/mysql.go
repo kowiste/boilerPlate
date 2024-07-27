@@ -3,9 +3,9 @@ package mysql
 import (
 	"fmt"
 
-	conf "github.com/kowiste/boilerplatesrc/config"
-	"github.com/kowiste/boilerplatesrc/model/asset"
-	"github.com/kowiste/boilerplatesrc/model/user"
+	conf "github.com/kowiste/boilerplate/src/config"
+	"github.com/kowiste/boilerplate/src/model/asset"
+	"github.com/kowiste/boilerplate/src/model/user"
 
 	"github.com/kowiste/config"
 	"gorm.io/driver/mysql"

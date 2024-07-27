@@ -3,7 +3,7 @@ package mysql
 import (
 	"context"
 
-	"github.com/kowiste/boilerplatesrc/model/asset"
+	"github.com/kowiste/boilerplate/src/model/asset"
 )
 
 func (m MySQL) CreateAsset(c context.Context, asset *asset.Asset) (id string, err error) {

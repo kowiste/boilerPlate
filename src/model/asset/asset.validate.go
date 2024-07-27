@@ -3,7 +3,7 @@ package asset
 import (
 	"context"
 
-	"github.com/kowiste/boilerplatepkg/validator"
+	"github.com/kowiste/boilerplate/pkg/validator"
 
 	"github.com/google/uuid"
 )
