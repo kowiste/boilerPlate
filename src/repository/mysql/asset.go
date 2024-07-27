@@ -25,7 +25,7 @@ func (m MySQL) Assets(c context.Context) (assets asset.Assets, err error) {
 	return
 }
 func (m MySQL) AssetByID(c context.Context, id string) (asset *asset.Asset, err error) {
-	result := m.db.Find(&asset)
+	result := m.db.Where("id = ?", id).First(&asset)
 	if result.Error != nil {
 		return nil, result.Error
 	}
