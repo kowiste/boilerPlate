@@ -3,7 +3,7 @@ module testClient
 go 1.22.2
 
 require (
-	github.com/kowiste/boilerplate/ v0.0.1
+	github.com/kowiste/boilerplate v0.0.3
 	google.golang.org/grpc v1.65.0
 )
 

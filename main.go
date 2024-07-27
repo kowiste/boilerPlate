@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	conf "github.com/kowiste/boilerplatesrc/config"
-	"github.com/kowiste/boilerplatesrc/core"
+	conf "github.com/kowiste/boilerplate/src/config"
+	"github.com/kowiste/boilerplate/src/core"
 
 	"github.com/kowiste/config"
 )

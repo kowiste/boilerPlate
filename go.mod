@@ -1,4 +1,4 @@
-module github.com/kowiste/boilerplate/
+module github.com/kowiste/boilerplate
 
 go 1.22.2
 
