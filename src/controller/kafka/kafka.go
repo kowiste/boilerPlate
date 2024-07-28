@@ -33,6 +33,8 @@ func (k Kafka) onMessage(data []byte) {
 		k.createUser(data)
 	case "updateUser":
 		k.updateUser(data)
+	default:
+		fmt.Println("event not implemented", dataEvent)
 	}
 }
 func (k Kafka) createUser(data []byte) {
@@ -42,7 +44,7 @@ func (k Kafka) createUser(data []byte) {
 	ctx := context.Background()
 	id, err := k.service.Create(ctx)
 	if err != nil {
-		//someting error
+		//some error
 	}
 	fmt.Println("created with id", id)
 }

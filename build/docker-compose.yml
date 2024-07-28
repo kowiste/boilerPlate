@@ -1,38 +1,15 @@
-name: boiler
+version: '3'
 services:
-  db:
-    image: mysql:8.4.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-    command:
-      --sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
-    ports:
-      - 9306:3306
-    volumes:
-      - ./entrypoint/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./mysql/data:/var/lib/mysql
-  mongo:
-    image: mongo:7
-    container_name: mongo
+  ms-boiler:
+    build: .
+    container_name: ms-boiler
     restart: unless-stopped
-    environment:
-      - MONGO_INITDB_DATABASE=mosquitto
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=NeVrEVppP6K2sqqv
-    volumes:
-      # seeding scripts
-      - ./entrypoint/init.js:/docker-entrypoint-initdb.d/mongo-init.js
-      # named volumes
-      - mongodb:/data/db
-      - mongoconfig:/data/configdb
-    ports:
-      - 27017:27017
+    env_file:
+      - .env
     networks:
       - web
-volumes:
-  mongodb:
-  mongoconfig:
+    ports:
+      - 5045:5045
 networks:
   web:
     external: true

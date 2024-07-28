@@ -1,0 +1,81 @@
+version: '3'
+name: logging
+services:
+  grafana:
+    image: grafana/grafana:11.1.1
+    container_name: grafana
+    ports:
+      - 3010:3010
+    restart: unless-stopped
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - grafana-data:/var/lib/grafana
+      - ./config/:/etc/grafana/
+    networks:
+      - web
+
+  # prometheus:
+  #   image: prom/prometheus
+  #   container_name: prometheus
+  #   restart: unless-stopped
+  #   ports:
+  #   - 9090:9090
+  #   volumes:
+  #   - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   - prometheus-data:/prometheus
+  #   networks:
+  #     - web
+    
+  # ###############################################################
+  # #            Agent to collect runtime metrics                 #
+  # ############################################################### 
+  # cadvisor:
+  #   image: gcr.io/cadvisor/cadvisor
+  #   container_name: cadvisor
+  #   restart: unless-stopped
+  #   volumes:                                          
+  #   - /:/rootfs:ro                                    
+  #   - /var/run:/var/run:rw                            
+  #   - /sys:/sys:ro
+  #   - /var/lib/docker/:/var/lib/docker:ro
+  #   ports:
+  #   - '1081:8080'
+  #   networks:
+  #     - web
+  ###############################################################
+  #                        Log container                        #
+  ############################################################### 
+  loki:
+    image: grafana/loki:main-5a87ccb
+    container_name: loki
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./config/loki.yml:/etc/loki/loki-config.yml
+      - loki-data:/loki
+    networks:
+      - web
+
+  promtail:
+    image: grafana/promtail:main-5a87ccb
+    container_name: promtail
+    restart: unless-stopped
+    depends_on:
+      - loki
+    volumes:
+      - /var/log:/var/log
+      - ./config/promtail.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - web
+
+
+volumes:
+  grafana-data:
+  loki-data:
+  prometheus-data:
+networks:
+  web:
+    external: true

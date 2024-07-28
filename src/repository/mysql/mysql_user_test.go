@@ -77,35 +77,30 @@ func TestUserByID(t *testing.T) {
 	assert.NoError(t, mock.ExpectationsWereMet())
 }
 func TestUpdateUser(t *testing.T) {
-        db, mock := NewMockDB()
-        defer db.DB()
+	db, mock := NewMockDB()
+	defer db.DB()
 
-        repo := MySQL{db: db}
-        ctx := context.Background()
+	repo := MySQL{db: db}
+	ctx := context.Background()
 
-        user := &user.User{
-                ID:   "1",
-                Name: "New Name",
-        }
+	user := &user.User{
+		ID:       "1",
+		Name:     "New Name",
+		LastName: "Other",
+		Age:      4,
+	}
 
-        mock.ExpectBegin()
+	mock.ExpectBegin()
+	mock.ExpectExec("^UPDATE `users` SET `name` = \\?,`last_name`=\\?,`age`=\\? WHERE id = \\? AND `id` = \\?$").
+		WithArgs(user.Name, user.LastName, user.Age, user.ID, user.ID).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	mock.ExpectCommit()
 
-        // Corrected regex to match the actual SQL statement
-        mock.ExpectExec("^UPDATE `users` SET `name` = \\? WHERE id = \\?$").
-                WithArgs(user.Name, user.ID).
-                WillReturnResult(sqlmock.NewResult(1, 1))
+	err := repo.UpdateUser(ctx, user)
 
-        mock.ExpectCommit()
-
-        err := repo.UpdateUser(ctx, user)
-
-        assert.NoError(t, err)
-        assert.NoError(t, mock.ExpectationsWereMet())
+	assert.NoError(t, err)
+	assert.NoError(t, mock.ExpectationsWereMet())
 }
-
-
-
-
 
 func TestDeleteUser(t *testing.T) {
 	db, mock := NewMockDB()
