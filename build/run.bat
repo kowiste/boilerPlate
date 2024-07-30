@@ -9,3 +9,6 @@ docker-compose -f ./docker-compose-db.yml up -d
 
 REM Start Docker Compose services for logging (Grafana, Loki, Promtail)
 docker-compose -f ./docker-compose-log.yml up -d
+
+REM Start Docker Compose services for broker (NATS)
+docker-compose -f ./docker-compose-broker.yml up -d
