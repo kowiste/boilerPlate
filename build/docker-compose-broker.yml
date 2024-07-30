@@ -10,10 +10,13 @@ services:
       - '18083:18083'
       - '9084:8084'
       - '9883:8883'
-    env_file:
-      - .env
     networks:
-      - web 
+      - web  
+    volumes:
+      - ./config/emqx/:/opt/emqx/etc/
+      - ./config/emqx/cluster-override.conf:/opt/emqx/data/configs/cluster-override.conf
+      - emqx-data:/opt/emqx/data
+
   nats:
     container_name: nats-server
     image: nats:2.9.25-alpine3.18
@@ -27,7 +30,9 @@ services:
     networks:
       - web
 
-
+volumes:
+  emqx-data:
+  
 networks:
   web:
     external: true
