@@ -1,5 +1,7 @@
 package config
 
+import "github.com/kowiste/boilerplate/pkg/config"
+
 type BoilerConfig struct {
 	Enviroment         string   `json:"Enviroment" env:"ENVIROMENT"`
 	ControllersActived string   `json:"ControllersActived" env:"CONTROLLERS_ACTIVE"`
@@ -12,4 +14,5 @@ type BoilerConfig struct {
 	ServiceName        string   `json:"ServiceName" env:"DATABASE_URL"`
 	ServicePort        string   `json:"ServicePort" env:"PORT"`
 	GRPCPort           string   `json:"GRPCPort" env:"GRPC_PORT"`
+	config.ConfigBroker
 }
