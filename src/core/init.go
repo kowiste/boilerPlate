@@ -3,6 +3,9 @@ package core
 import (
 	"fmt"
 
+	"github.com/kowiste/boilerplate/src/adapters/mysql"
+
+	"github.com/kowiste/boilerplate/src/adapters"
 	"github.com/kowiste/boilerplate/pkg/common/controller"
 	"github.com/kowiste/boilerplate/pkg/validator"
 	conf "github.com/kowiste/boilerplate/src/config"
@@ -10,8 +13,6 @@ import (
 	"github.com/kowiste/boilerplate/src/controller/grpc"
 	"github.com/kowiste/boilerplate/src/controller/kafka"
 	"github.com/kowiste/boilerplate/src/controller/rest"
-	"github.com/kowiste/boilerplate/src/repository"
-	"github.com/kowiste/boilerplate/src/repository/mysql"
 	assetservice "github.com/kowiste/boilerplate/src/service/asset"
 	userservice "github.com/kowiste/boilerplate/src/service/user"
 
@@ -28,8 +29,8 @@ func Init() (err error) {
 	//Init Validator
 	validator.New()
 	//Init database
-	repository.New(mysql.New())
-	database, err := repository.Get()
+	adapters.New(mysql.New())
+	database, err := adapters.Get()
 	if err != nil {
 		return
 	}
@@ -40,7 +41,7 @@ func Init() (err error) {
 	//Init services
 	assetservice.New(database)
 	userservice.New(database)
-	
+
 	//Init controllers
 	ctr := make([]ownControl.IController, 0)
 	for i := range cnf.Controllers {

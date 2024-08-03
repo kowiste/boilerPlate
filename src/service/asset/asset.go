@@ -3,9 +3,9 @@ package assetservice
 import (
 	"sync"
 
+	"github.com/Kowiste/boilerPlate/src/repository"
 	"github.com/kowiste/boilerplate/pkg/errors"
 	"github.com/kowiste/boilerplate/src/model/asset"
-	"github.com/kowiste/boilerplate/src/repository"
 )
 
 type AssetService struct {

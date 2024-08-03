@@ -3,14 +3,14 @@ package userservice
 import (
 	"sync"
 
+	"github.com/kowiste/boilerplate/src/adapters"
 	"github.com/kowiste/boilerplate/pkg/errors"
 	"github.com/kowiste/boilerplate/src/model/user"
-	"github.com/kowiste/boilerplate/src/repository"
 )
 
 type UserService struct {
 	user *user.User
-	db   repository.IRepository
+	db   adapters.IRepository
 }
 
 var (
@@ -18,7 +18,7 @@ var (
 	once     sync.Once
 )
 
-func New(db repository.IRepository) (serv *UserService) {
+func New(db adapters.IRepository) (serv *UserService) {
 
 	once.Do(func() {
 
