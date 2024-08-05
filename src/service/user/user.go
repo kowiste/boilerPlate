@@ -3,14 +3,18 @@ package userservice
 import (
 	"sync"
 
-	"github.com/kowiste/boilerplate/src/adapters"
 	"github.com/kowiste/boilerplate/pkg/errors"
+	"github.com/kowiste/boilerplate/src/db"
+	"github.com/kowiste/boilerplate/src/messaging"
 	"github.com/kowiste/boilerplate/src/model/user"
+	"github.com/kowiste/boilerplate/src/transport"
 )
 
 type UserService struct {
 	user *user.User
-	db   adapters.IRepository
+	db   db.IDatabase
+	msg  messaging.IMessaging
+	transport transport.ITransport
 }
 
 var (
@@ -18,7 +22,7 @@ var (
 	once     sync.Once
 )
 
-func New(db adapters.IRepository) (serv *UserService) {
+func New(db db.IDatabase) (serv *UserService) {
 
 	once.Do(func() {
 

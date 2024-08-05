@@ -11,5 +11,6 @@
     "DatabaseName": "user",
     "ServiceName": "reporting",
     "ServicePort": "9084",
-    "GRPCPort": "50051"
+    "GRPCPort": "50051",
+    "LogAddress": "localhost:4004"
 }

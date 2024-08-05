@@ -1,4 +1,4 @@
-package adapters
+package db
 
 import (
 	"sync"
@@ -6,19 +6,19 @@ import (
 	"github.com/kowiste/boilerplate/pkg/errors"
 )
 
-type IRepository interface {
+type IDatabase interface {
 	Init() error
-	IUserRepository
-	IAssetRepository
+	IUserDatabase
+	IAssetDatabase
 }
 
 var (
-	instance IRepository
+	instance IDatabase
 	once     sync.Once
 )
 
 // New returns the singleton instance of the repository
-func New(injector IRepository) IRepository {
+func New(injector IDatabase) IDatabase {
 	once.Do(func() {
 		instance = injector
 	})
@@ -26,7 +26,7 @@ func New(injector IRepository) IRepository {
 }
 
 // Get returns the singleton instance
-func Get() (IRepository, error) {
+func Get() (IDatabase, error) {
 	if instance == nil {
 		return nil, errors.New("repository not set", errors.EErrorServerInternal)
 	}

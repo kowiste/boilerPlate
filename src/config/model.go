@@ -14,5 +14,6 @@ type BoilerConfig struct {
 	ServiceName        string   `json:"ServiceName" env:"DATABASE_URL"`
 	ServicePort        string   `json:"ServicePort" env:"PORT"`
 	GRPCPort           string   `json:"GRPCPort" env:"GRPC_PORT"`
+	LogAddress         string   `json:"LogAddress" env:"LOG_ADDRESS"`
 	config.ConfigBroker
 }

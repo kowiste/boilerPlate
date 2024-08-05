@@ -28,7 +28,7 @@ schema_config:
 
 table_manager:
   retention_deletes_enabled: true
-  retention_period: 120h #5days
+  retention_period: 120h # 5 days
 
 ruler:
   alertmanager_url: http://localhost:9093

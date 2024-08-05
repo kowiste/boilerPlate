@@ -1,31 +1,18 @@
 server:
-  http_listen_port: 9081
+  http_listen_port: 9080
   grpc_listen_port: 0
-
 
 positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://loki:3100/loki/api/v1/push
+  - url: http://localhost:3100/loki/api/v1/push
 
 scrape_configs:
-- job_name: kafka
-  kafka:
-    brokers:
-    - broker:9092
-    topics:
-    - log
-  relabel_configs:
-      - action: replace
-        source_labels:
-          - __meta_kafka_topic
-        target_label: topic
-      - action: replace
-        source_labels:
-          - __meta_kafka_partition
-        target_label: partition
-      - action: replace
-        source_labels:
-          - __meta_kafka_group_id
-        target_label: group
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*.log

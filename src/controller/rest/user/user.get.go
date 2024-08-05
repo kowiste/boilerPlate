@@ -14,11 +14,14 @@ func (a UserAPI) userQuery(c *gin.Context) (input *user.FindUsersInput, err erro
 	input = new(user.FindUsersInput)
 	input.Text = c.Query("text")
 	ageString := c.Query("age")
-
-	age, err := strconv.Atoi(ageString)
-	if err != nil {
-		return nil, errors.New("", errors.EErrorUnhandled)
+	var age int
+	if ageString != "" {
+		age, err = strconv.Atoi(ageString)
+		if err != nil {
+			return nil, errors.New("", errors.EErrorUnhandled)
+		}
 	}
+
 	input.Age = age
 	return
 

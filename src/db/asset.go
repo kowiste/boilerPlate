@@ -1,4 +1,4 @@
-package adapters
+package db
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"github.com/kowiste/boilerplate/src/model/asset"
 )
 
-type IAssetRepository interface {
+type IAssetDatabase interface {
 	CreateAsset(c context.Context, asset *asset.Asset) (string, error)
 	Assets(c context.Context) (asset.Assets, error)
 	AssetByID(c context.Context, id string) (*asset.Asset, error)

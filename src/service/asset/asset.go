@@ -3,32 +3,56 @@ package assetservice
 import (
 	"sync"
 
-	"github.com/Kowiste/boilerPlate/src/repository"
 	"github.com/kowiste/boilerplate/pkg/errors"
+	"github.com/kowiste/boilerplate/src/db"
+	"github.com/kowiste/boilerplate/src/messaging"
 	"github.com/kowiste/boilerplate/src/model/asset"
+	"github.com/kowiste/boilerplate/src/transport"
 )
 
 type AssetService struct {
-	asset *asset.Asset
-	db    repository.IRepository
+	asset     *asset.Asset
+	db        db.IDatabase
+	msg       messaging.IMessaging
+	transport transport.ITransport
 }
+type Option func(*AssetService)
 
 var (
 	instance *AssetService
 	once     sync.Once
 )
 
-func New(db repository.IRepository) (serv *AssetService) {
+func New(opts ...Option) (serv *AssetService) {
 
 	once.Do(func() {
 
 		instance = &AssetService{
 			asset: new(asset.Asset),
-			db:    db,
+		}
+		for _, opt := range opts {
+			opt(instance)
 		}
 	})
 
 	return instance
+}
+func WithDatabase(db db.IDatabase) Option {
+	return func(s *AssetService) {
+		s.db = db
+	}
+}
+
+func WithMessaging(msg messaging.IMessaging) Option {
+	return func(s *AssetService) {
+		s.msg = msg
+	}
+}
+
+func WithTransport(transport transport.ITransport) Option {
+	return func(s *AssetService) {
+		s.transport = transport
+	}
 }
 
 func Get() (*AssetService, error) {
