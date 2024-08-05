@@ -10,7 +10,7 @@
     "DatabasePassword": "example",
     "DatabaseName": "user",
     "ServiceName": "reporting",
-    "ServicePort": "9084",
+    "ServicePort": "9284",
     "GRPCPort": "50051",
     "LogAddress": "localhost:4004"
 }

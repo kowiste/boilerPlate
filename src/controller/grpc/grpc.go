@@ -47,11 +47,20 @@ func New(opts ...Option) (g *GRPC) {
 		return
 	}
 	g = &GRPC{
-		server:       grpc.NewServer(),
 		serviceUser:  sU,
 		serviceAsset: sA,
 	}
 	g.applyOptions(opts...)
+
+	if g.tracer != nil {
+		//use telemetry
+		g.server = grpc.NewServer(
+			grpc.UnaryInterceptor(g.TelemetryInterceptor),
+		)
+		return
+	}
+	g.server = grpc.NewServer()
+
 	return
 }
 
@@ -93,7 +102,7 @@ func (a *GRPC) Init() (err error) {
 	return nil
 }
 
-func (a GRPC) TelemetryUnaryInterceptor(
+func (a GRPC) TelemetryInterceptor(
 	ctx context.Context,
 	req interface{},
 	info *grpc.UnaryServerInfo,

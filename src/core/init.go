@@ -55,7 +55,7 @@ func Init() (err error) {
 		case controller.Rest:
 			ctr = append(ctr, rest.New(rest.WithTracer(&tracer)))
 		case controller.GRPC:
-			ctr = append(ctr, grpc.New())
+			ctr = append(ctr, grpc.New(grpc.WithTracer(&tracer)))
 		}
 		err = ctr[i].Init()
 		if err != nil {
