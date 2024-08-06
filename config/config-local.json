@@ -12,5 +12,10 @@
     "ServiceName": "reporting",
     "ServicePort": "9284",
     "GRPCPort": "50051",
-    "LogAddress": "localhost:4004"
+    "LogAddress": "localhost:4004",
+    "BrokerProducer": "boiler",
+    "BrokerAddress": "nats://localhost:4222",
+    "BrokerTopic": [
+        "testNats"
+    ]
 }

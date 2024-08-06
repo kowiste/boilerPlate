@@ -14,5 +14,9 @@ func (serv UserService) Update(c context.Context) (err error) {
 	if err != nil {
 		return
 	}
+	err = serv.msg.Send("testNats", "refresh", serv.user)
+	if err != nil {
+		return
+	}
 	return serv.db.UpdateUser(c, serv.user)
 }

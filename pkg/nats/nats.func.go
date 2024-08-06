@@ -9,7 +9,7 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
-func (n *Nats) Consume(topic string) {
+func (n *Nats) consume(topic string) {
 	sub, err := n.js.Subscribe(topic, func(msg *nats.Msg) {
 		go n.messageEvent(msg.Data)
 	}, nats.Durable(n.config.Producer))
@@ -24,7 +24,7 @@ func (n *Nats) Reconnect(topic string) {
 		n.conn.Drain()
 		n.conn.Close()
 		n.connectCore()
-		n.Consume(topic)
+		n.consume(topic)
 		n.reconnCounter++
 		time.Sleep(time.Duration(n.reconnCounter))
 	}
@@ -39,24 +39,21 @@ func (n *Nats) Write(topic string, data []byte) (err error) {
 	return nil
 }
 
-func (n Nats) WriteResponseMessage(ID, userID, tenantID, event string, data []byte) (err error) {
-	err = n.WriteMessage(ID, userID, tenantID, n.config.ResponseTopic, event, data)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-func (n Nats) WriteMessage(ID, userID, tenantID, topic, event string, data []byte) (err error) {
+func (n Nats) WriteMessage(ID, userID, topic, event string, data any) (err error) {
 
 	if n.config.Producer == "" || event == "" || data == nil {
 		return errors.New("missing")
+	}
+	dataBytes, err := json.Marshal(data)
+	if err != nil {
+		return
 	}
 	msg := stream.Message{
 		ID:       ID,
 		UserID:   userID,
 		Producer: n.config.Producer,
 		Event:    event,
-		Data:     data,
+		Data:     json.RawMessage(dataBytes),
 	}
 	b, err := json.Marshal(msg)
 	if err != nil {

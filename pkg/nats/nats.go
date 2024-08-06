@@ -1,6 +1,7 @@
 package nats
 
 import (
+	"errors"
 	"sync"
 	"time"
 
@@ -29,8 +30,15 @@ func (n *Nats) Init(cfg *config.ConfigBroker) error {
 		return err
 	}
 	n.createStreams()
-	for _, topic := range n.config.ConsumerTopic {
-		go n.Consume(topic)
+
+	return nil
+}
+func (n *Nats) Consume(consumeTopics []string) error {
+	if n.messageEvent == nil {
+		return errors.New("should set message")
+	}
+	for _, topic := range consumeTopics {
+		go n.consume(topic)
 	}
 	return nil
 }
@@ -61,16 +69,6 @@ func (n *Nats) SetErrorEvent(callback func(errorLog error)) {
 }
 func (n *Nats) createStreams() (err error) {
 
-	if n.config.ResponseTopic != "" {
-		_, err = n.js.AddStream(&nats.StreamConfig{
-			Name:   n.config.ResponseTopic,
-			MaxAge: time.Hour,
-		})
-		if err != nil {
-			return err
-		}
-	}
-
 	for i := range n.config.Topic {
 		_, err := n.js.AddStream(&nats.StreamConfig{
 			Name:   n.config.Topic[i],
@@ -80,14 +78,6 @@ func (n *Nats) createStreams() (err error) {
 			return err
 		}
 	}
-	for _, topic := range n.config.ConsumerTopic {
-		_, err := n.js.AddStream(&nats.StreamConfig{
-			Name:   topic,
-			MaxAge: time.Hour,
-		})
-		if err != nil {
-			return err
-		}
-	}
+
 	return nil
 }

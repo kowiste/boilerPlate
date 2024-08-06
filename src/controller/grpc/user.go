@@ -3,7 +3,7 @@ package grpc
 import (
 	"context"
 
-	pbUser "github.com/kowiste/boilerplate/doc/proto/user"
+	pbUser "github.com/kowiste/boilerplate/pkg/proto/user"
 	"github.com/kowiste/boilerplate/src/model/user"
 )
 

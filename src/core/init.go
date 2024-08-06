@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/kowiste/boilerplate/src/db/mysql"
+	"github.com/kowiste/boilerplate/src/messaging/nats"
 
 	"github.com/kowiste/boilerplate/pkg/common/controller"
 	telemetry "github.com/kowiste/boilerplate/pkg/opentelemetry"
@@ -28,6 +29,12 @@ func Init() (err error) {
 	}
 	//Init Validator
 	validator.New()
+
+	//Init logging
+	tp, err := telemetry.New()
+	if err != nil {
+		return
+	}
 	//Init database
 	db.New(mysql.New())
 	database, err := db.Get()
@@ -38,15 +45,19 @@ func Init() (err error) {
 	if err != nil {
 		return
 	}
-
-	//Init logging
-	tp, err := telemetry.New()
+	//Init messaging
+	n := nats.New()
+	err = n.Init()
 	if err != nil {
 		return
 	}
 	//Init services
-	assetserv.New(assetserv.WithDatabase(database))
-	userservice.New(database)
+	assetserv.New(
+		assetserv.WithDatabase(database),
+		assetserv.WithMessaging(n))
+	userservice.New(
+		userservice.WithDatabase(database),
+		userservice.WithMessaging(n))
 	tracer := tp.Tracer(cnf.ServiceName)
 	//Init controllers
 	ctr := make([]ownControl.IController, 0)

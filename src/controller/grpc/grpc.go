@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	pbAsset "github.com/kowiste/boilerplate/doc/proto/asset"
-	pbUser "github.com/kowiste/boilerplate/doc/proto/user"
+	pbAsset "github.com/kowiste/boilerplate/pkg/proto/asset"
+	pbUser "github.com/kowiste/boilerplate/pkg/proto/user"
 	conf "github.com/kowiste/boilerplate/src/config"
 	assetservice "github.com/kowiste/boilerplate/src/service/asset"
 	userservice "github.com/kowiste/boilerplate/src/service/user"
