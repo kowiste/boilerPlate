@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -35,10 +34,9 @@ func main() {
 
 func onMessage(data []byte) {
 	msg := new(stream.Message)
-	json.Unmarshal(data, msg)
-
+	msg.Decode(data)
 	fmt.Printf("- message - : %s\n", msg)
 	u := new(user.User)
-	json.Unmarshal(msg.Data, &u)
+	msg.UnMarshal(u)
 	fmt.Printf("- user updated - : %+v\n", u)
 }

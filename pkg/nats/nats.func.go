@@ -1,7 +1,6 @@
 package nats
 
 import (
-	"encoding/json"
 	"errors"
 	"time"
 
@@ -44,18 +43,14 @@ func (n Nats) WriteMessage(ID, userID, topic, event string, data any) (err error
 	if n.config.Producer == "" || event == "" || data == nil {
 		return errors.New("missing")
 	}
-	dataBytes, err := json.Marshal(data)
-	if err != nil {
-		return
-	}
+
 	msg := stream.Message{
 		ID:       ID,
 		UserID:   userID,
 		Producer: n.config.Producer,
 		Event:    event,
-		Data:     json.RawMessage(dataBytes),
 	}
-	b, err := json.Marshal(msg)
+	b, err := msg.Marshal(data)
 	if err != nil {
 		return
 	}
