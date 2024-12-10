@@ -1,6 +1,0 @@
-{
-    "DatabaseURL": "http://my-sever.com",
-    "DatabasePort": 3316,
-    "ServiceName": "reporting",
-    "ServicePort": 8080
-}
